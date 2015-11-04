@@ -20,13 +20,34 @@ public class VAO {
 		GL30.glBindVertexArray(0);
 	}
 	
+	public void setIndices(VBO indices){
+		bind();
+		indices.bind();
+		unbind();
+		indices.unbind();
+	}
+	
 	public void setPointer(int slot, VBO vbo, int size, int stride, long offset){
+		bind();
 		vbo.bind();
 		
 		//fill the VAO slot with this vbo
 		GL20.glVertexAttribPointer(slot, size, GL11.GL_FLOAT, false, stride, offset);
 		
 		vbo.unbind();
+		unbind();
+	}
+	
+	public void enableVertexAttribArray(int slot){
+		bind();
+		GL20.glEnableVertexAttribArray(slot);
+		unbind();
+	}
+	
+	public void draw(int mode, int start, int count){
+		bind();
+		GL11.glDrawElements(mode, count, GL11.GL_UNSIGNED_INT, start * 4);
+		unbind();
 	}
 	
 	public void dispose(){

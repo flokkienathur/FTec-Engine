@@ -1,6 +1,7 @@
 package net.apryx.graphics;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
 
 public class GL {
 	
@@ -23,6 +24,14 @@ public class GL {
 	
 	public static void drawArrays(int mode, int first, int count){
 		GL11.glDrawArrays(mode, first, count);
+	}
+	
+	public static void enableVertexAttribArray(int index){
+		GL20.glEnableVertexAttribArray(index);
+	}
+	
+	public static void drawElements(int mode, int first, int count){
+		GL11.glDrawElements(mode, count, GL11.GL_UNSIGNED_INT, first);
 	}
 	
 	public static boolean checkError(){

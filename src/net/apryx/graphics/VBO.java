@@ -1,6 +1,7 @@
 package net.apryx.graphics;
 
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 import org.lwjgl.opengl.GL15;
 
@@ -30,6 +31,17 @@ public class VBO {
 		GL15.glBufferData(type, buffer, drawManner);
 		unbind();
 	}
+	
+	public void bufferData(IntBuffer buffer){
+		bufferData(buffer, STATIC_DRAW);
+	}
+	
+	public void bufferData(IntBuffer buffer, int drawManner){
+		bind();
+		GL15.glBufferData(type, buffer, drawManner);
+		unbind();
+	}
+	
 	
 	public void bind(){
 		GL15.glBindBuffer(type, id);

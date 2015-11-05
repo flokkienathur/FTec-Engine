@@ -9,7 +9,7 @@ import net.apryx.graphics.VAO;
 import net.apryx.graphics.VBO;
 import net.apryx.utils.BufferUtils;
 
-public class MeshRenderer {
+public class MeshBatch {
 	
 	private Mesh mesh;
 	
@@ -21,7 +21,7 @@ public class MeshRenderer {
 	
 	private VAO vao;
 	
-	public MeshRenderer(Mesh mesh){
+	public MeshBatch(Mesh mesh){
 		vertices = new VBO(VBO.ARRAY_BUFFER);
 		colors = new VBO(VBO.ARRAY_BUFFER);
 		uvs = new VBO(VBO.ARRAY_BUFFER);

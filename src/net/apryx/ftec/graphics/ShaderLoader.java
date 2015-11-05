@@ -1,7 +1,6 @@
 package net.apryx.ftec.graphics;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import net.apryx.graphics.GL;
 import net.apryx.graphics.Shader;

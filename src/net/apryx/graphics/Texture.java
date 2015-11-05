@@ -1,6 +1,8 @@
 package net.apryx.graphics;
 
+import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 import org.lwjgl.opengl.GL11;
 
@@ -38,9 +40,17 @@ public class Texture {
 	public void texParameter(int param, int value){
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, param, value);
 	}
-	
+
 	public void setData(int width, int height, FloatBuffer data, int colorDepth){
 		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, colorDepth, width, height, 0, colorDepth, GL11.GL_FLOAT, data);
+	}
+
+	public void setData(int width, int height, IntBuffer data, int colorDepth){
+		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, colorDepth, width, height, 0, colorDepth, GL11.GL_UNSIGNED_INT, data);
+	}
+	
+	public void setData(int width, int height, ByteBuffer data, int colorDepth){
+		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, colorDepth, width, height, 0, colorDepth, GL11.GL_UNSIGNED_BYTE, data);
 	}
 	
 	public void dispose(){

@@ -11,7 +11,6 @@ import net.apryx.graphics.mesh.CircleMesh;
 import net.apryx.graphics.mesh.Mesh;
 import net.apryx.graphics.mesh.MeshRenderer;
 import net.apryx.math.Matrix4;
-import net.apryx.utils.BufferUtils;
 
 
 public class TestGame extends Game{
@@ -29,15 +28,11 @@ public class TestGame extends Game{
 	public void init() {
 		GL.clearColor(0,0,1,1);
 		
-		//quad = new QuadMesh(-0.5f, -0.5f, 0.5f, 0.5f);
-		quad = new CircleMesh(0.5f,12);
+		quad = new CircleMesh(0.5f,6);
 		
 		renderer = new MeshRenderer(quad);
 		
-		texture = TextureLoader.loadTexture(2, 2, BufferUtils.createFloatBuffer(new float[]{
-				1.0f, 1.0f, 1.0f,   0.0f, 0.0f, 0.0f,
-				0.0f, 0.0f, 0.0f,   1.0f, 1.0f, 1.0f
-		}),Texture.RGB);
+		texture = TextureLoader.loadTexture(new File("res/thing.jpg"));
 
 		model = new Matrix4();
 		projection = new Matrix4();
@@ -62,21 +57,11 @@ public class TestGame extends Game{
 		texture.bind();
 
 		program.setUniformMatrixProjection(projection);
-		
-		int calls = 0;
+		model.setTranslate(0,0,0);
+		program.setUniformMatrixModel(model);
 
 		model.setIdentity();
-		for(float y = -2; y < 2; y += 0.1f){
-			for(float x = -2; x < 2; x += 0.1f){
-				model.setTranslate(x,y,0);
-				model.setScale(0.1f, 0.1f, 1);
-				program.setUniformMatrixModel(model);
-				calls++;
-				renderer.draw();
-			}
-		}
-		
-		System.out.println(calls);
+		renderer.draw();
 					
 	}
 

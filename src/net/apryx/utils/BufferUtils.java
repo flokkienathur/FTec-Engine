@@ -28,4 +28,8 @@ public class BufferUtils {
 		out.flip();
 		return out;
 	}
+	
+	public static ByteBuffer createByteBuffer(int capacity){
+		return ByteBuffer.allocateDirect(capacity * 4).order(ByteOrder.nativeOrder());
+	}
 }

@@ -39,9 +39,12 @@ public class Texture {
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, param, value);
 	}
 	
-	public void setData(FloatBuffer data, int colorDepth){
-		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, colorDepth, 2, 2, 0, colorDepth, GL11.GL_FLOAT, data);
-		
+	public void setData(int width, int height, FloatBuffer data, int colorDepth){
+		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, colorDepth, width, height, 0, colorDepth, GL11.GL_FLOAT, data);
+	}
+	
+	public void dispose(){
+		GL11.glDeleteTextures(id);
 	}
 	
 }

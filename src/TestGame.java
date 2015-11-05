@@ -7,9 +7,9 @@ import net.apryx.ftec.graphics.TextureLoader;
 import net.apryx.graphics.GL;
 import net.apryx.graphics.ShaderProgram;
 import net.apryx.graphics.Texture;
-import net.apryx.graphics.mesh.CircleMesh;
 import net.apryx.graphics.mesh.Mesh;
 import net.apryx.graphics.mesh.MeshRenderer;
+import net.apryx.graphics.mesh.QuadMesh;
 import net.apryx.math.Matrix4;
 
 
@@ -26,13 +26,13 @@ public class TestGame extends Game{
 	
 	@Override
 	public void init() {
-		GL.clearColor(0,0,1,1);
+		GL.clearColor(1,1,1,1);
 		
-		quad = new CircleMesh(0.5f,6);
+		quad = new QuadMesh();//new CircleMesh(1f,5);//
 		
 		renderer = new MeshRenderer(quad);
 		
-		texture = TextureLoader.loadTexture(new File("res/thing.jpg"));
+		texture = TextureLoader.loadTexture(new File("res/logo.png"));
 
 		model = new Matrix4();
 		projection = new Matrix4();
@@ -52,7 +52,8 @@ public class TestGame extends Game{
 		program.use();
 		
 		projection.setIdentity();
-		projection.setScale(1, 4f/3f, 1);
+		projection.setScale(0.5f, (float)FTec.window.getWidth() / (float)FTec.window.getHeight() * 0.5f, 1);
+	
 		
 		texture.bind();
 
@@ -62,7 +63,6 @@ public class TestGame extends Game{
 
 		model.setIdentity();
 		renderer.draw();
-					
 	}
 
 	@Override

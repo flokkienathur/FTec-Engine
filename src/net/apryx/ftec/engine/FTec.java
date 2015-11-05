@@ -15,9 +15,9 @@ public class FTec {
 	}
 
 	public static void create(Game game){
-		 window = new Window(800,600);
+		 window = new Window(1920,1080,true);
 		 
-		 window.setVSync(false);
+		 window.setVSync(true);
 		 window.setVisible(true);
 		 
 		 game.init();

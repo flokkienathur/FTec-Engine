@@ -38,5 +38,7 @@ public class QuadMesh extends Mesh{
 				0,1,2,
 				0,2,3
 		};
+		
+		recalculateNormals();
 	}
 }

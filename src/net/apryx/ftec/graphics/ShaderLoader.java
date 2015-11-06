@@ -55,10 +55,10 @@ public class ShaderLoader {
 		program.attach(vertex);
 		program.attach(fragment);
 		
-		program.bindAttributeLocation(Batch.POSITION_INDEX, Batch.POSITION_ATTR);
-		program.bindAttributeLocation(Batch.COLOR_INDEX, Batch.COLOR_ATTR);
-		program.bindAttributeLocation(Batch.UV_INDEX, Batch.UV_ATTR);
-		program.bindAttributeLocation(Batch.NORMAL_INDEX, Batch.NORMAL_ATTR);
+		program.bindAttributeLocation(ShaderConstants.POSITION_INDEX, ShaderConstants.POSITION_ATTR);
+		program.bindAttributeLocation(ShaderConstants.COLOR_INDEX, ShaderConstants.COLOR_ATTR);
+		program.bindAttributeLocation(ShaderConstants.UV_INDEX, ShaderConstants.UV_ATTR);
+		program.bindAttributeLocation(ShaderConstants.NORMAL_INDEX, ShaderConstants.NORMAL_ATTR);
 		
 		program.link();
 		

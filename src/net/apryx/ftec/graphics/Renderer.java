@@ -3,6 +3,7 @@ package net.apryx.ftec.graphics;
 import java.io.File;
 
 import net.apryx.graphics.Camera;
+import net.apryx.graphics.Color4;
 import net.apryx.graphics.GL;
 import net.apryx.graphics.ShaderProgram;
 import net.apryx.graphics.Texture;
@@ -22,7 +23,8 @@ public class Renderer {
 	private ShaderProgram shader;
 
 	public Matrix4 model;
-	public Camera camera;
+	
+	public Color4 blend;
 	
 	public Renderer(){
 		defaultShader = ShaderLoader.createProgram(new File("res/default_vertex.glsl"), new File("res/default_fragment.glsl"));
@@ -34,7 +36,8 @@ public class Renderer {
 		setShader(defaultShader);
 		
 		model = new Matrix4();
-		camera = new Camera();
+		
+		blend = Color4.white.clone();
 	}
 	
 	public void setShader(ShaderProgram program){
@@ -45,13 +48,17 @@ public class Renderer {
 		GL.clear(GL.DEPTH_BUFFER_BIT | GL.COLOR_BUFFER_BIT);
 	}
 	
-	public void setup(){
+	public void setup(Camera camera){
 		shader.use();
 		
 		camera.setup();
 		
 		shader.setUniformMatrixView(camera.view);
 		shader.setUniformMatrixProjection(camera.projection);
+	}
+	
+	public void drawRectangle(float x, float y, float w, float h){
+		drawTexture(white, x, y, w, h);
 	}
 	
 	public void drawTexture(Texture texture, float x, float y, float w, float h){
@@ -64,7 +71,13 @@ public class Renderer {
 	
 	public void draw(MeshBatch renderer, Texture texture){
 		shader.setUniformMatrixModel(model);
-		texture.bind();
+		
+		shader.setUniformBlend(blend);
+		
+		if(texture != null)
+			texture.bind();
+		else
+			white.bind();
 		
 		renderer.draw();
 	}

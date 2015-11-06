@@ -12,10 +12,6 @@ public class Shader {
 	public static int VERTEX_SHADER = GL20.GL_VERTEX_SHADER;
 	public static int FRAGMENT_SHADER = GL20.GL_FRAGMENT_SHADER;
 
-	public static final String UNIFORM_MATRIX_MODEL = "u_MatrixModel";
-	public static final String UNIFORM_MATRIX_VIEW = "u_MatrixView";
-	public static final String UNIFORM_MATRIX_PROJECTION = "u_MatrixProjection";
-	
 	int type = 0;
 	int id = 0;
 	boolean compiled = false;

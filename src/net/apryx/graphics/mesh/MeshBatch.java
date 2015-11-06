@@ -3,7 +3,7 @@ package net.apryx.graphics.mesh;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
-import net.apryx.ftec.graphics.Batch;
+import net.apryx.ftec.graphics.ShaderConstants;
 import net.apryx.graphics.GL;
 import net.apryx.graphics.VAO;
 import net.apryx.graphics.VBO;
@@ -16,6 +16,7 @@ public class MeshBatch {
 	private VBO vertices;
 	private VBO colors;
 	private VBO uvs;
+	private VBO normals;
 	
 	private VBO indices;
 	
@@ -25,6 +26,7 @@ public class MeshBatch {
 		vertices = new VBO(VBO.ARRAY_BUFFER);
 		colors = new VBO(VBO.ARRAY_BUFFER);
 		uvs = new VBO(VBO.ARRAY_BUFFER);
+		normals = new VBO(VBO.ARRAY_BUFFER);
 		
 		indices = new VBO(VBO.ELEMENT_ARRAY_BUFFER);
 		
@@ -45,6 +47,8 @@ public class MeshBatch {
 		//4 components per uv
 		FloatBuffer u = BufferUtils.createFloatBuffer(modelSize * 2);
 		
+		FloatBuffer n = BufferUtils.createFloatBuffer(modelSize * 3);
+		
 		for(int i = 0; i < modelSize; i++){
 			v.put(mesh.vertices[i].x);
 			v.put(mesh.vertices[i].y);
@@ -57,6 +61,10 @@ public class MeshBatch {
 
 			u.put(mesh.uvs[i].x);
 			u.put(mesh.uvs[i].y);
+
+			n.put(mesh.normals[i].x);
+			n.put(mesh.normals[i].y);
+			n.put(mesh.normals[i].z);
 		}
 		
 		//three indices per triangle
@@ -67,20 +75,24 @@ public class MeshBatch {
 		v.flip();
 		c.flip();
 		u.flip();
+		n.flip();
 		
 		vertices.bufferData(v);
 		colors.bufferData(c);
 		uvs.bufferData(u);
+		normals.bufferData(n);
 		
 		indices.bufferData(idx);
 		
-		vao.setPointer(Batch.POSITION_INDEX, vertices, 3, 0, 0);
-		vao.setPointer(Batch.COLOR_INDEX, colors, 4, 0, 0);
-		vao.setPointer(Batch.UV_INDEX, uvs, 2, 0, 0);
+		vao.setPointer(ShaderConstants.POSITION_INDEX, vertices, 3, 0, 0);
+		vao.setPointer(ShaderConstants.COLOR_INDEX, colors, 4, 0, 0);
+		vao.setPointer(ShaderConstants.UV_INDEX, uvs, 2, 0, 0);
+		vao.setPointer(ShaderConstants.NORMAL_INDEX, normals, 3, 0, 0);
 
-		vao.enableVertexAttribArray(Batch.POSITION_INDEX);
-		vao.enableVertexAttribArray(Batch.COLOR_INDEX);
-		vao.enableVertexAttribArray(Batch.UV_INDEX);
+		vao.enableVertexAttribArray(ShaderConstants.POSITION_INDEX);
+		vao.enableVertexAttribArray(ShaderConstants.COLOR_INDEX);
+		vao.enableVertexAttribArray(ShaderConstants.UV_INDEX);
+		vao.enableVertexAttribArray(ShaderConstants.NORMAL_INDEX);
 		
 		vao.setIndices(indices);
 	}

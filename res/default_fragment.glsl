@@ -7,5 +7,5 @@ in vec2 v_Uv;
 
 void main()
 {
-    gl_FragColor =v_Color * texture(sampler, v_Uv);
+    gl_FragColor = v_Color * texture(sampler, v_Uv);
 }

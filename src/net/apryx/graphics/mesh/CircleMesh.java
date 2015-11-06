@@ -50,5 +50,7 @@ public class CircleMesh extends Mesh{
 		
 		triangles[triangles.length - 2] = iterations;
 		triangles[triangles.length - 1] = 1;
+		
+		recalculateNormals();
 	}
 }

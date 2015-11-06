@@ -22,6 +22,15 @@ public class Mesh {
 		triangles = new int[0];
 	}
 	
+	public void recalculateNormals(){
+		normals = new Vector3[vertices.length];
+		
+		for(int i = 0; i < normals.length; i++){
+			//look at this normals calculation :)
+			normals[i] = new Vector3(0,0,1);
+		}
+	}
+	
 	public int getVertexCount(){
 		return vertices.length;
 	}

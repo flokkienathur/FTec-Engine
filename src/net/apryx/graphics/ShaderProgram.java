@@ -3,11 +3,12 @@ package net.apryx.graphics;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
-import net.apryx.math.Matrix4;
-import net.apryx.utils.BufferUtils;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
+
+import net.apryx.ftec.graphics.ShaderConstants;
+import net.apryx.math.Matrix4;
+import net.apryx.utils.BufferUtils;
 
 public class ShaderProgram {
 	
@@ -19,6 +20,7 @@ public class ShaderProgram {
 	private int uniformModelMatrixLocation;
 	private int uniformViewMatrixLocation;
 	private int uniformProjectionMatrixLocation;
+	private int uniformBlendColorLocation;
 	
 	//temp matrix buffers
 	private FloatBuffer modelMatrix, viewMatrix, projectionMatrix;
@@ -49,9 +51,10 @@ public class ShaderProgram {
 	public void link(){
 		GL20.glLinkProgram(id);
 		
-		uniformModelMatrixLocation = getUniformLocation(Shader.UNIFORM_MATRIX_MODEL);
-		uniformViewMatrixLocation = getUniformLocation(Shader.UNIFORM_MATRIX_VIEW);
-		uniformProjectionMatrixLocation = getUniformLocation(Shader.UNIFORM_MATRIX_PROJECTION);
+		uniformModelMatrixLocation = getUniformLocation(ShaderConstants.UNIFORM_MATRIX_MODEL);
+		uniformViewMatrixLocation = getUniformLocation(ShaderConstants.UNIFORM_MATRIX_VIEW);
+		uniformProjectionMatrixLocation = getUniformLocation(ShaderConstants.UNIFORM_MATRIX_PROJECTION);
+		uniformBlendColorLocation = getUniformLocation(ShaderConstants.UNIFORM_BLEND);
 	}
 	
 	public void use(){
@@ -94,6 +97,22 @@ public class ShaderProgram {
 		Matrix4.toFloatBuffer(matrix, projectionMatrix);
 		projectionMatrix.position(0);
 		setUniformMatrix4(uniformProjectionMatrixLocation, projectionMatrix);
+	}
+	
+	public void setUniformBlend(Color4 color){
+		setUniformBlend(color.r, color.g, color.b, color.a);
+	}
+	
+	public void setUniformBlend(float r, float g, float b){
+		GL20.glUniform4f(uniformBlendColorLocation, r, g, b, 1);
+	}
+	
+	public void setUniformBlend(float r, float g, float b, float a){
+		GL20.glUniform4f(uniformBlendColorLocation, r, g, b, a);
+	}
+	
+	public void setUniformVec4(int location, float a, float b, float c, float d){
+		GL20.glUniform4f(uniformBlendColorLocation, a,b,c,d);
 	}
 	
 	public void setUniformMatrix4(int location, FloatBuffer matrix){

@@ -7,6 +7,8 @@ import net.apryx.ftec.graphics.TextureLoader;
 import net.apryx.graphics.Camera;
 import net.apryx.graphics.GL;
 import net.apryx.graphics.Texture;
+import net.apryx.math.Mathf;
+import net.apryx.math.Matrix4;
 
 
 public class TestGame extends Game{
@@ -25,6 +27,13 @@ public class TestGame extends Game{
 		
 		camera.size.x = 80;
 		camera.size.y = 60;
+		
+		Matrix4 out = new Matrix4();
+		out.rotateZ(Mathf.PI / 2);
+		out.scale(4,4,4);
+		System.out.println(out);
+		out.translate(1,2,3);
+		System.out.println(out);
 	}
 
 	@Override

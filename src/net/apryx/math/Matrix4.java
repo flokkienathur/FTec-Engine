@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 public class Matrix4 {
 	
+	//actual data
 	private float[] data;
 	
 	//[ 0, 1, 2, 3]
@@ -39,7 +40,98 @@ public class Matrix4 {
 		data[15] = 1;
 	}
 	
+	public Matrix4 clone(){
+		float[] newData = new float[16];
+		System.arraycopy(data, 0, newData, 0, 16);
+		return new Matrix4(newData);
+	}
+	
+	public String toString(){
+		StringBuilder out = new StringBuilder();
+		
+		for(int i = 0; i < 4; i++){
+			out.append("[");
+			out.append(String.format("%.2g", data[i * 4]));
+			out.append(", ");
+			out.append(String.format("%.2g", data[i * 4 + 1]));
+			out.append(", ");
+			out.append(String.format("%.2g", data[i * 4 + 2]));
+			out.append(", ");
+			out.append(String.format("%.2g", data[i * 4 + 3]));
+			out.append("]");
+			
+			if(i != 3)
+				out.append("\n");
+		}
+		
+		return out.toString();
+	}
+	
+	
+	public void rotateZ(float angle){
+		//optimized matrix matrix product with rotation matrix
+		
+		//[ c,-s, 2, 3]
+		//[ s, c, 6, 7]
+		//[ 8, 9,10,11]
+		//[12,13,14,15]
+		
+		float c = Mathf.cos(angle);
+		float s = Mathf.sin(angle);
+		
+		//prevent data loss
+		float d1, d2;
+		
+		for(int row = 0; row < 4; row++){
+			//row start index
+			int i = row * 4;
+			
+			d1 = data[i];
+			d2 = data[i + 1];
+			
+			data[i + 0] = d1 * c + d2 * s;
+			data[i + 1] = d1 * -s + d2 * c;
+		}
+	}
+
+	public void translate(float x, float y, float z){
+		//translate this matrix, optimized translation
+		for(int row = 0; row < 4; row++){
+			//row start index
+			int i = row * 4;
+			data[i + 3] = data[i] * x + data[i + 1] * y + data[i + 2] * z + data[i + 3];
+		}
+	}
+	
+
+	public void scale(float x, float y, float z){
+		//scale this matrix up, optimized multiply
+		for(int row = 0; row < 4; row++){
+			//row start index
+			int i = row * 4;
+			data[i + 0] = data[i] * x;
+			data[i + 1] = data[i + 1] * y;
+			data[i + 2] = data[i + 2] * z;
+		}
+	}
+	
 	public static void toFloatBuffer(Matrix4 mat, FloatBuffer outputBuffer){
 		outputBuffer.put(mat.data);
+	}
+	
+	public static void multiply(Matrix4 result, Matrix4 a, Matrix4 b){
+		multiply(result.data, a.data, b.data);
+	}
+	
+	public static void multiply(float[] result, float[] a, float[] b){
+		//full matrix matrix multiplication
+		for(int row = 0; row < 4; row++){
+			//row start index
+			int i = row * 4;
+			result[i + 0] = a[i] * b[0] + a[i + 1] * b[4] + a[i + 2] * b[8 ] + a[i + 3] * b[12];
+			result[i + 1] = a[i] * b[1] + a[i + 1] * b[5] + a[i + 2] * b[9 ] + a[i + 3] * b[13];
+			result[i + 2] = a[i] * b[2] + a[i + 1] * b[6] + a[i + 2] * b[10] + a[i + 3] * b[14];
+			result[i + 3] = a[i] * b[3] + a[i + 1] * b[7] + a[i + 2] * b[11] + a[i + 3] * b[15];
+		}
 	}
 }

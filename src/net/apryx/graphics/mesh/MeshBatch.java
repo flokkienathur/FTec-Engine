@@ -4,35 +4,28 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import net.apryx.ftec.graphics.ShaderConstants;
+import net.apryx.graphics.Batch;
 import net.apryx.graphics.GL;
-import net.apryx.graphics.VAO;
-import net.apryx.graphics.VBO;
 import net.apryx.utils.BufferUtils;
 
-public class MeshBatch {
+public class MeshBatch extends Batch{
 	
 	private Mesh mesh;
 	
-	private VBO vertices;
-	private VBO colors;
-	private VBO uvs;
-	private VBO normals;
-	
-	private VBO indices;
-	
-	private VAO vao;
-	
 	public MeshBatch(Mesh mesh){
-		vertices = new VBO(VBO.ARRAY_BUFFER);
-		colors = new VBO(VBO.ARRAY_BUFFER);
-		uvs = new VBO(VBO.ARRAY_BUFFER);
-		normals = new VBO(VBO.ARRAY_BUFFER);
-		
-		indices = new VBO(VBO.ELEMENT_ARRAY_BUFFER);
-		
-		vao = new VAO();
-		
+		super();
 		this.mesh = mesh;
+
+		vao.setPointer(ShaderConstants.POSITION_INDEX, vertices, 3, 0, 0);
+		vao.setPointer(ShaderConstants.COLOR_INDEX, colors, 4, 0, 0);
+		vao.setPointer(ShaderConstants.UV_INDEX, uvs, 2, 0, 0);
+		vao.setPointer(ShaderConstants.NORMAL_INDEX, normals, 3, 0, 0);
+
+		vao.enableVertexAttribArray(ShaderConstants.POSITION_INDEX);
+		vao.enableVertexAttribArray(ShaderConstants.COLOR_INDEX);
+		vao.enableVertexAttribArray(ShaderConstants.UV_INDEX);
+		vao.enableVertexAttribArray(ShaderConstants.NORMAL_INDEX);
+		
 		init();
 	}
 	
@@ -84,17 +77,11 @@ public class MeshBatch {
 		
 		indices.bufferData(idx);
 		
-		vao.setPointer(ShaderConstants.POSITION_INDEX, vertices, 3, 0, 0);
-		vao.setPointer(ShaderConstants.COLOR_INDEX, colors, 4, 0, 0);
-		vao.setPointer(ShaderConstants.UV_INDEX, uvs, 2, 0, 0);
-		vao.setPointer(ShaderConstants.NORMAL_INDEX, normals, 3, 0, 0);
-
-		vao.enableVertexAttribArray(ShaderConstants.POSITION_INDEX);
-		vao.enableVertexAttribArray(ShaderConstants.COLOR_INDEX);
-		vao.enableVertexAttribArray(ShaderConstants.UV_INDEX);
-		vao.enableVertexAttribArray(ShaderConstants.NORMAL_INDEX);
-		
 		vao.setIndices(indices);
+	}
+	
+	public void draw(){
+		vao.drawElements(GL.TRIANGLES, 0, mesh.triangles.length);
 	}
 	
 	public void updateMesh(){
@@ -105,17 +92,5 @@ public class MeshBatch {
 		this.mesh = mesh;
 		init();
 	}
-	
-	public void draw(){
-		vao.draw(GL.TRIANGLES, 0, mesh.triangles.length);
-	}
-	
-	public void dispose(){
-		vao.dispose();
-		
-		vertices.dispose();
-		colors.dispose();
-		uvs.dispose();
-		indices.dispose();
-	}
+
 }

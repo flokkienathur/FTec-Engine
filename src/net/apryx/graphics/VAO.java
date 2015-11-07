@@ -44,7 +44,13 @@ public class VAO {
 		unbind();
 	}
 	
-	public void draw(int mode, int start, int count){
+	public void drawArrays(int mode, int start, int count){
+		bind();
+		GL11.glDrawArrays(mode, start, count);
+		unbind();
+	}
+	
+	public void drawElements(int mode, int start, int count){
 		bind();
 		GL11.glDrawElements(mode, count, GL11.GL_UNSIGNED_INT, start * 4);
 		unbind();

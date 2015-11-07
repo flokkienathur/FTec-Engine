@@ -2,6 +2,7 @@ package net.apryx.ftec.graphics;
 
 import java.io.File;
 
+import net.apryx.graphics.Batch;
 import net.apryx.graphics.Camera;
 import net.apryx.graphics.Color4;
 import net.apryx.graphics.GL;
@@ -62,14 +63,13 @@ public class Renderer {
 	}
 	
 	public void drawTexture(Texture texture, float x, float y, float w, float h){
-		model.setIdentity();
-		model.setTranslate(x, y, 0);
-		model.setScale(w, h, 0);
+		model.translate(x, y, 0);
+		model.scale(w, h, 0);
 		
 		draw(quad, texture);
 	}
 	
-	public void draw(MeshBatch renderer, Texture texture){
+	public void draw(Batch renderer, Texture texture){
 		shader.setUniformMatrixModel(model);
 		
 		shader.setUniformBlend(blend);

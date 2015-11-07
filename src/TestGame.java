@@ -8,7 +8,6 @@ import net.apryx.graphics.Camera;
 import net.apryx.graphics.GL;
 import net.apryx.graphics.SpriteBatch;
 import net.apryx.graphics.Texture;
-import net.apryx.math.Mathf;
 
 
 public class TestGame extends Game{
@@ -18,6 +17,14 @@ public class TestGame extends Game{
 	private Camera camera;
 	private SpriteBatch batch;
 	
+	private int things = 10;
+	//200 * 200 = 40000 tiles
+	//40000 tiles = 80000 triangles
+	//1000 * 1000 = 1000000 tiles
+	//1000000 tiles = 2000000 triangles (2 million)
+	
+	//things * things * 2 = triangles
+	
 	@Override
 	public void init() {
 		GL.clearColor(0,0,0,1);
@@ -25,10 +32,37 @@ public class TestGame extends Game{
 		texture = TextureLoader.loadTexture(new File("res/logo.png"));
 		renderer = new Renderer();
 		camera = new Camera();
-		batch = new SpriteBatch(renderer, 120);
+		batch = new SpriteBatch(renderer, things*things*6);
 		
-		camera.size.x = 80;
-		camera.size.y = 60;
+		camera.size.x = FTec.window.getWidth() / 1f;
+		camera.size.y = FTec.window.getHeight() / 1f;
+		
+		batch.setTexture(texture);
+		
+		batch.begin();
+		
+		for(int y = 0; y < things; y++){
+			for(int x = 0; x < things; x++){
+
+				batch.uv(0, 0);
+				batch.vertex(x, y, 0);
+				batch.uv(1, 0);
+				batch.vertex(x+1, y, 0);
+				batch.uv(1, 1);
+				batch.vertex(x+1, y+1, 0);
+				
+
+				batch.uv(0, 0);
+				batch.vertex(x, y, 0);
+				batch.uv(1, 1);
+				batch.vertex(x+1, y+1, 0);
+				batch.uv(0, 1);
+				batch.vertex(x, y+1, 0);
+				
+			}
+		}
+		
+		batch.end();
 	}
 
 	float a = 0;
@@ -44,22 +78,10 @@ public class TestGame extends Game{
 		renderer.model.setIdentity();
 		renderer.setup(camera);
 		
-		renderer.model.translate(40, 30, 0);
+		renderer.model.scale(32,32, 1);
 		
-		batch.setTexture(texture);
+		renderer.draw(batch, texture);
 		
-		batch.begin();
-
-		batch.uv(0, 0);
-		batch.vertex(Mathf.cos(a) * 16 + 16, 0, 0);
-		batch.uv(0, 1);
-		batch.vertex(0, 32, 0);
-		batch.uv(1, 1);
-		batch.vertex(48, 32 * (Mathf.sin(a) + 1), 0);
-		
-		batch.end();
-		
-		renderer.drawTexture(texture, -16, -16, 32, 32);
 	}
 
 	@Override

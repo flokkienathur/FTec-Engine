@@ -67,6 +67,9 @@ public class Renderer {
 		model.scale(w, h, 0);
 		
 		draw(quad, texture);
+		
+		model.scale(1f/w, 1f/h, 0);
+		model.translate(-x, -y, 0);
 	}
 	
 	public void draw(Batch renderer, Texture texture){

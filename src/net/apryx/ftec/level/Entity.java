@@ -9,6 +9,10 @@ public class Entity {
 	protected Level level;
 	protected Transform transform;
 	
+	public Entity(){
+		transform = new Transform(0, 0, 32, 32);
+	}
+	
 	public void update(){
 		
 	}

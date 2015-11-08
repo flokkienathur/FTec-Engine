@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL30;
 public class VAO {
 	
 	private int id;
+	private VBO indices;
 	
 	public VAO(){
 		id = GL30.glGenVertexArrays();
@@ -21,6 +22,7 @@ public class VAO {
 	}
 	
 	public void setIndices(VBO indices){
+		this.indices = indices;
 		bind();
 		indices.bind();
 		unbind();
@@ -52,6 +54,9 @@ public class VAO {
 	
 	public void drawElements(int mode, int start, int count){
 		bind();
+		//because intel gpu's dont save the element arrays
+		if(indices != null)
+			indices.bind();
 		GL11.glDrawElements(mode, count, GL11.GL_UNSIGNED_INT, start * 4);
 		unbind();
 	}

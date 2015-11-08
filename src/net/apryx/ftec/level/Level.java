@@ -39,4 +39,8 @@ public class Level {
 	public void removeEntity(Entity entity){
 		entities.remove(entity);
 	}
+	
+	public void dispose(){
+		renderer.dispose();
+	}
 }

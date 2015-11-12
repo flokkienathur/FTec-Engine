@@ -29,6 +29,6 @@ public class Camera {
 		view.rotateY(rotation.y);
 		view.translate(-position.x, -position.y, -position.z);
 
-		projection = Matrix4.getProjectionMatrix(90, size.x / size.y, 0.01f, 100);
+		projection = Matrix4.getProjectionMatrix(90, size.x / size.y, 0.01f, 1000);
 	}
 }

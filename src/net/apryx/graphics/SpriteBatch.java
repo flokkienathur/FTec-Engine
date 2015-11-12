@@ -112,11 +112,13 @@ public class SpriteBatch extends Batch{
 		uvBuffer.flip();
 		normalBuffer.flip();
 		
+		int vbodraw = VBO.STATIC_DRAW;
+		
 		//update vbo's
-		vertices.bufferData(vertexBuffer, VBO.DYNAMIC_DRAW);
-		colors.bufferData(colorBuffer, VBO.DYNAMIC_DRAW);
-		uvs.bufferData(uvBuffer, VBO.DYNAMIC_DRAW);
-		normals.bufferData(normalBuffer, VBO.DYNAMIC_DRAW);
+		vertices.bufferData(vertexBuffer, vbodraw);
+		colors.bufferData(colorBuffer, vbodraw);
+		uvs.bufferData(uvBuffer, vbodraw);
+		normals.bufferData(normalBuffer, vbodraw);
 		
 		length = idx;
 		idx = 0;

@@ -6,315 +6,131 @@ package net.apryx.input;
 public final class Keys {
 
 	private Keys() {}
-
-	public static final int ENTER = '\n';
-	public static final int BACK_SPACE = '\b';
-	public static final int TAB = '\t';
-	public static final int CANCEL = 0x03;
-	public static final int CLEAR = 0x0C;
-	public static final int SHIFT = 0x10;
-	public static final int CONTROL = 0x11;
-	public static final int ALT = 0x12;
-	public static final int PAUSE = 0x13;
-	public static final int CAPS_LOCK = 0x14;
-	public static final int ESCAPE = 0x1B;
-	public static final int SPACE = 0x20;
-	public static final int PAGE_UP = 0x21;
-	public static final int PAGE_DOWN = 0x22;
-	public static final int END = 0x23;
-	public static final int HOME = 0x24;
-
-	public static final int LEFT = 0x25;
-
-	public static final int UP = 0x26;
-
-	public static final int RIGHT = 0x27;
-
-	public static final int DOWN = 0x28;
-
-	public static final int COMMA = 0x2C;
-
-	public static final int MINUS = 0x2D;
-
-	public static final int PERIOD = 0x2E;
-
-	public static final int SLASH = 0x2F;
-
-	public static final int KEY_0 = 0x30;
-	public static final int KEY_1 = 0x31;
-	public static final int KEY_2 = 0x32;
-	public static final int KEY_3 = 0x33;
-	public static final int KEY_4 = 0x34;
-	public static final int KEY_5 = 0x35;
-	public static final int KEY_6 = 0x36;
-	public static final int KEY_7 = 0x37;
-	public static final int KEY_8 = 0x38;
-	public static final int KEY_9 = 0x39;
-
-	public static final int SEMICOLON = 0x3B;
-
-	public static final int EQUALS = 0x3D;
-
-	public static final int A = 0x41;
-	public static final int B = 0x42;
-	public static final int C = 0x43;
-	public static final int D = 0x44;
-	public static final int E = 0x45;
-	public static final int F = 0x46;
-	public static final int G = 0x47;
-	public static final int H = 0x48;
-	public static final int I = 0x49;
-	public static final int J = 0x4A;
-	public static final int K = 0x4B;
-	public static final int L = 0x4C;
-	public static final int M = 0x4D;
-	public static final int N = 0x4E;
-	public static final int O = 0x4F;
-	public static final int P = 0x50;
-	public static final int Q = 0x51;
-	public static final int R = 0x52;
-	public static final int S = 0x53;
-	public static final int T = 0x54;
-	public static final int U = 0x55;
-	public static final int V = 0x56;
-	public static final int W = 0x57;
-	public static final int X = 0x58;
-	public static final int Y = 0x59;
-	public static final int Z = 0x5A;
-
-	public static final int OPEN_BRACKET = 0x5B;
-
-	public static final int BACK_SLASH = 0x5C;
-
-	public static final int CLOSE_BRACKET = 0x5D;
-
-	public static final int NUMPAD0 = 0x60;
-	public static final int NUMPAD1 = 0x61;
-	public static final int NUMPAD2 = 0x62;
-	public static final int NUMPAD3 = 0x63;
-	public static final int NUMPAD4 = 0x64;
-	public static final int NUMPAD5 = 0x65;
-	public static final int NUMPAD6 = 0x66;
-	public static final int NUMPAD7 = 0x67;
-	public static final int NUMPAD8 = 0x68;
-	public static final int NUMPAD9 = 0x69;
-	public static final int MULTIPLY = 0x6A;
-	public static final int ADD = 0x6B;
-
-	public static final int SEPARATER = 0x6C;
-
-	public static final int SEPARATOR = SEPARATER;
-
-	public static final int SUBTRACT = 0x6D;
-	public static final int DECIMAL = 0x6E;
-	public static final int DIVIDE = 0x6F;
-	public static final int DELETE = 0x7F;
-	public static final int NUM_LOCK = 0x90;
-	public static final int SCROLL_LOCK = 0x91;
-
-	public static final int F1 = 0x70;
-
-	public static final int F2 = 0x71;
-
-	public static final int F3 = 0x72;
-
-	public static final int F4 = 0x73;
-
-	public static final int F5 = 0x74;
-
-	public static final int F6 = 0x75;
-
-	public static final int F7 = 0x76;
-
-	public static final int F8 = 0x77;
-
-	public static final int F9 = 0x78;
-
-	public static final int F10 = 0x79;
-
-	public static final int F11 = 0x7A;
-
-	public static final int F12 = 0x7B;
-
-	public static final int F13 = 0xF000;
-
-	public static final int F14 = 0xF001;
-
-	public static final int F15 = 0xF002;
-
-	public static final int F16 = 0xF003;
-
-	public static final int F17 = 0xF004;
-
-	public static final int F18 = 0xF005;
-
-	public static final int F19 = 0xF006;
-
-	public static final int F20 = 0xF007;
-
-	public static final int F21 = 0xF008;
-
-	public static final int F22 = 0xF009;
-
-	public static final int F23 = 0xF00A;
-
-	public static final int F24 = 0xF00B;
-
-	public static final int PRINTSCREEN = 0x9A;
-	public static final int INSERT = 0x9B;
-	public static final int HELP = 0x9C;
-	public static final int META = 0x9D;
-
-	public static final int BACK_QUOTE = 0xC0;
-	public static final int QUOTE = 0xDE;
-
-	public static final int KP_UP = 0xE0;
-
-	public static final int KP_DOWN = 0xE1;
-
-	public static final int KP_LEFT = 0xE2;
-
-	public static final int KP_RIGHT = 0xE3;
-
-	public static final int DEAD_GRAVE = 0x80;
-
-	public static final int DEAD_ACUTE = 0x81;
-
-	public static final int DEAD_CIRCUMFLEX = 0x82;
-
-	public static final int DEAD_TILDE = 0x83;
-
-	public static final int DEAD_MACRON = 0x84;
-
-	public static final int DEAD_BREVE = 0x85;
-
-	public static final int DEAD_ABOVEDOT = 0x86;
-
-	public static final int DEAD_DIAERESIS = 0x87;
-
-	public static final int DEAD_ABOVERING = 0x88;
-
-	public static final int DEAD_DOUBLEACUTE = 0x89;
-
-	public static final int DEAD_CARON = 0x8a;
-
-	public static final int DEAD_CEDILLA = 0x8b;
-
-	public static final int DEAD_OGONEK = 0x8c;
-
-	public static final int DEAD_IOTA = 0x8d;
-
-	public static final int DEAD_VOICED_SOUND = 0x8e;
-
-	public static final int DEAD_SEMIVOICED_SOUND = 0x8f;
-
-	public static final int AMPERSAND = 0x96;
-
-	public static final int ASTERISK = 0x97;
-
-	public static final int QUOTEDBL = 0x98;
-
-	public static final int LESS = 0x99;
-
-	public static final int GREATER = 0xa0;
-
-	public static final int BRACELEFT = 0xa1;
-
-	public static final int BRACERIGHT = 0xa2;
-
-	public static final int AT = 0x0200;
-
-	public static final int COLON = 0x0201;
-
-	public static final int CIRCUMFLEX = 0x0202;
-
-	public static final int DOLLAR = 0x0203;
-
-	public static final int EURO_SIGN = 0x0204;
-
-	public static final int EXCLAMATION_MARK = 0x0205;
-
-	public static final int INVERTED_EXCLAMATION_MARK = 0x0206;
-
-	public static final int LEFT_PARENTHESIS = 0x0207;
-
-	public static final int NUMBER_SIGN = 0x0208;
-
-	public static final int PLUS = 0x0209;
-
-	public static final int RIGHT_PARENTHESIS = 0x020A;
-
-	public static final int UNDERSCORE = 0x020B;
-
-	public static final int WINDOWS = 0x020C;
-
-	public static final int CONTEXT_MENU = 0x020D;
-
-	public static final int FINAL = 0x0018;
-
-	public static final int CONVERT = 0x001C;
-
-	public static final int NONCONVERT = 0x001D;
-
-	public static final int ACCEPT = 0x001E;
-
-	public static final int MODECHANGE = 0x001F;
-
-	public static final int KANA = 0x0015;
-
-	public static final int KANJI = 0x0019;
-
-	public static final int ALPHANUMERIC = 0x00F0;
-
-	public static final int KATAKANA = 0x00F1;
-
-	public static final int HIRAGANA = 0x00F2;
-
-	public static final int FULL_WIDTH = 0x00F3;
-
-	public static final int HALF_WIDTH = 0x00F4;
-
-	public static final int ROMAN_CHARACTERS = 0x00F5;
-
-	public static final int ALL_CANDIDATES = 0x0100;
-
-	public static final int PREVIOUS_CANDIDATE = 0x0101;
-
-	public static final int CODE_INPUT = 0x0102;
-
-	public static final int JAPANESE_KATAKANA = 0x0103;
-
-	public static final int JAPANESE_HIRAGANA = 0x0104;
-
-	public static final int JAPANESE_ROMAN = 0x0105;
-
-	public static final int KANA_LOCK = 0x0106;
-
-	public static final int INPUT_METHOD_ON_OFF = 0x0107;
-
-	public static final int CUT = 0xFFD1;
-
-	public static final int COPY = 0xFFCD;
-
-	public static final int PASTE = 0xFFCF;
-
-	public static final int UNDO = 0xFFCB;
-
-	public static final int AGAIN = 0xFFC9;
-
-	public static final int FIND = 0xFFD0;
-
-	public static final int PROPS = 0xFFCA;
-
-	public static final int STOP = 0xFFC8;
-
-	public static final int COMPOSE = 0xFF20;
-
-	public static final int ALT_GRAPH = 0xFF7E;
-
-	public static final int BEGIN = 0xFF58;
-
-	public static final int UNDEFINED = 0x0;
 	
-	public static final int LAST = 0x15c;
+	//stolen from org.lwjgl.glfw.GLFW
+	public static final int
+	SPACE         = 0x20,
+	APOSTROPHE    = 0x27,
+	COMMA         = 0x2C,
+	MINUS         = 0x2D,
+	PERIOD        = 0x2E,
+	SLASH         = 0x2F,
+	KEY_0 		  = 0x30,
+	KEY_1 		  = 0x31, 
+	KEY_2 		  = 0x32, 
+	KEY_3  		  = 0x33, 
+	KEY_4  		  = 0x34,	
+	KEY_5  		  = 0x35, 
+	KEY_6  		  = 0x36, 
+	KEY_7  		  = 0x37, 
+	KEY_8  		  = 0x38,
+	KEY_9  		  = 0x39,
+	SEMICOLON     = 0x3B,
+	EQUAL         = 0x3D,
+	A             = 0x41,
+	B             = 0x42,
+	C             = 0x43,
+	D             = 0x44,
+	E             = 0x45,
+	F             = 0x46,
+	G             = 0x47,
+	H             = 0x48,
+	I             = 0x49,
+	J             = 0x4A,
+	K             = 0x4B,
+	L             = 0x4C,
+	M             = 0x4D,
+	N             = 0x4E,
+	O             = 0x4F,
+	P             = 0x50,
+	Q             = 0x51,
+	R             = 0x52,
+	S             = 0x53,
+	T             = 0x54,
+	U             = 0x55,
+	V             = 0x56,
+	W             = 0x57,
+	X             = 0x58,
+	Y             = 0x59,
+	Z             = 0x5A,
+	LEFT_BRACKET  = 0x5B,
+	BACKSLASH     = 0x5C,
+	RIGHT_BRACKET = 0x5D,
+	GRAVE_ACCENT  = 0x60,
+	WORLD_1       = 0xA1,
+	WORLD_2       = 0xA2;
+
+/** Function keys. */
+public static final int
+	ESCAPE        = 0x100,
+	ENTER         = 0x101,
+	TAB           = 0x102,
+	BACKSPACE     = 0x103,
+	INSERT        = 0x104,
+	DELETE        = 0x105,
+	RIGHT         = 0x106,
+	LEFT          = 0x107,
+	DOWN          = 0x108,
+	UP            = 0x109,
+	PAGE_UP       = 0x10A,
+	PAGE_DOWN     = 0x10B,
+	HOME          = 0x10C,
+	END           = 0x10D,
+	CAPS_LOCK     = 0x118,
+	SCROLL_LOCK   = 0x119,
+	NUM_LOCK      = 0x11A,
+	PRINT_SCREEN  = 0x11B,
+	PAUSE         = 0x11C,
+	F1            = 0x122,
+	F2            = 0x123,
+	F3            = 0x124,
+	F4            = 0x125,
+	F5            = 0x126,
+	F6            = 0x127,
+	F7            = 0x128,
+	F8            = 0x129,
+	F9            = 0x12A,
+	F10           = 0x12B,
+	F11           = 0x12C,
+	F12           = 0x12D,
+	F13           = 0x12E,
+	F14           = 0x12F,
+	F15           = 0x130,
+	F16           = 0x131,
+	F17           = 0x132,
+	F18           = 0x133,
+	F19           = 0x134,
+	F20           = 0x135,
+	F21           = 0x136,
+	F22           = 0x137,
+	F23           = 0x138,
+	F24           = 0x139,
+	F25           = 0x13A,
+	KP_0          = 0x140,
+	KP_1          = 0x141,
+	KP_2          = 0x142,
+	KP_3          = 0x143,
+	KP_4          = 0x144,
+	KP_5          = 0x145,
+	KP_6          = 0x146,
+	KP_7          = 0x147,
+	KP_8          = 0x148,
+	KP_9          = 0x149,
+	KP_DECIMAL    = 0x14A,
+	KP_DIVIDE     = 0x14B,
+	KP_MULTIPLY   = 0x14C,
+	KP_SUBTRACT   = 0x14D,
+	KP_ADD        = 0x14E,
+	KP_ENTER      = 0x14F,
+	KP_EQUAL      = 0x150,
+	LEFT_SHIFT    = 0x154,
+	LEFT_CONTROL  = 0x155,
+	LEFT_ALT      = 0x156,
+	LEFT_SUPER    = 0x157,
+	RIGHT_SHIFT   = 0x158,
+	RIGHT_CONTROL = 0x159,
+	RIGHT_ALT     = 0x15A,
+	RIGHT_SUPER   = 0x15B,
+	MENU          = 0x15C,
+	LAST          = MENU;
 }

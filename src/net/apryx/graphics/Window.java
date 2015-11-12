@@ -122,7 +122,7 @@ public final class Window {
 	}
 	
 	public void setCursorHidden(boolean hidden){
-		glfwSetInputMode(windowHandle, GLFW_CURSOR, hidden ? GLFW_CURSOR_HIDDEN : GLFW_CURSOR_NORMAL);
+		glfwSetInputMode(windowHandle, GLFW_CURSOR, hidden ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
 	}
 
 	public float getMouseX(){

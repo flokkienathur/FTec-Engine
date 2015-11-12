@@ -3,6 +3,7 @@ import net.apryx.ftec.engine.FTec;
 import net.apryx.ftec.engine.Game;
 import net.apryx.ftec.graphics.Renderer;
 import net.apryx.ftec.level.Level;
+import net.apryx.ftec.level.Tilemap;
 import net.apryx.graphics.GL;
 
 
@@ -19,10 +20,11 @@ public class Razura extends Game{
 		level = new Level(renderer);
 		
 		//check for divideability?
-		level.camera.size.x = FTec.window.getWidth() / 2f;
-		level.camera.size.y = FTec.window.getHeight() / 2f;
+		level.camera.size.x = 16f;
+		level.camera.size.y = 9f;
 		
 		level.addEntity(new PlayerEntity());
+		level.addEntity(new Tilemap(level.renderer));
 	}
 
 	@Override

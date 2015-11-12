@@ -2,6 +2,7 @@
 
 uniform sampler2D sampler;
 
+in vec4 v_Position;
 in vec4 v_Color;
 in vec2 v_Uv;
 

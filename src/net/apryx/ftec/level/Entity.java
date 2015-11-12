@@ -10,7 +10,7 @@ public class Entity {
 	protected Transform transform;
 	
 	public Entity(){
-		transform = new Transform(0, 0, 32, 32);
+		transform = new Transform(0, 0, 1, 1);
 	}
 	
 	public void update(){
@@ -18,7 +18,7 @@ public class Entity {
 	}
 	
 	public void render(Renderer renderer){
-		renderer.blend = Color4.red;
+		renderer.blend = Color4.white;
 		renderer.drawRectangle(transform.position.x, transform.position.y, transform.bounds.width, transform.bounds.height);
 	}
 	

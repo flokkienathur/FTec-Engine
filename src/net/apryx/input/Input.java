@@ -4,6 +4,10 @@ import net.apryx.ftec.engine.FTec;
 
 public class Input {
 	
+	public static void setMouseGrabbed(boolean b){
+		FTec.window.setCursorHidden(b);
+	}
+	
 	public static float getMouseX(){
 		return FTec.window.getMouseX();
 	}

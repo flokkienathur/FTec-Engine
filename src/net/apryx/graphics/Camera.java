@@ -2,29 +2,33 @@ package net.apryx.graphics;
 
 import net.apryx.math.Matrix4;
 import net.apryx.math.Vector2;
+import net.apryx.math.Vector3;
 
 public class Camera {
 	
 	public Matrix4 view;
 	public Matrix4 projection;
 	
-	public Vector2 position;
+	public Vector3 position;
+	public Vector3 rotation;
 	public Vector2 size;
 	
 	public Camera(){
-		position = new Vector2();
+		position = new Vector3();
+		rotation = new Vector3();
 		size = new Vector2(1,1);
 		view = new Matrix4();
 		projection = new Matrix4();
 	}
 
 	public void setup(){
-		view.setTranslate(position.x, position.y, 0);
-		projection.setIdentity();
+		view.setIdentity();
 
-		//set the translate to top left
-		projection.setTranslate(-1, 1, 0);
-		//scale and invert y
-		projection.setScale(1f/(0.5f*size.x), -1f/(0.5f*size.y), 1);
+		view.rotateZ(rotation.z);
+		view.rotateX(rotation.x);
+		view.rotateY(rotation.y);
+		view.translate(-position.x, -position.y, -position.z);
+
+		projection = Matrix4.getProjectionMatrix(90, size.x / size.y, 0.01f, 100);
 	}
 }

@@ -26,6 +26,9 @@ public class Level {
 	
 	public void render(){
 		renderer.setup(camera);
+		
+		renderer.model.setIdentity();
+		
 		for(int i = 0; i < entities.size(); i++){
 			entities.get(i).render(renderer);
 		}

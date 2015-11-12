@@ -1,5 +1,7 @@
 package net.apryx.ftec.engine;
 
+import org.lwjgl.opengl.GL11;
+
 import net.apryx.graphics.GL;
 import net.apryx.graphics.Window;
 
@@ -17,8 +19,11 @@ public class FTec {
 	public static void create(Game game){
 		 window = new Window(1280,720,false);
 		 
-		 window.setVSync(true);
+		 window.setVSync(false);
 		 window.setVisible(true);
+		 
+		 GL11.glEnable(GL11.GL_DEPTH_TEST);
+		 GL11.glEnable(GL11.GL_CULL_FACE);
 		 
 		 game.init();
 		 
@@ -34,6 +39,7 @@ public class FTec {
 			 previous = current;
 			 
 			 deltaTime = delta / 1000000000f;
+			 runTime += deltaTime;
 			 
 			 sum += delta;
 			 

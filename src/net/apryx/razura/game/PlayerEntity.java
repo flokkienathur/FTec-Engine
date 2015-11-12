@@ -5,37 +5,71 @@ import net.apryx.ftec.graphics.Renderer;
 import net.apryx.ftec.level.Entity;
 import net.apryx.input.Input;
 import net.apryx.input.Keys;
-import net.apryx.math.Vector3;
+import net.apryx.math.Mathf;
 
 public class PlayerEntity extends Entity{
 	
-	private Vector3 velocity;
+	private float speed = 4;
 	
 	public PlayerEntity(){
-		velocity = new Vector3();
+		super();
 	}
 	
 	@Override
 	public void update() {
-		super.update();
+		level.camera.rotation.y += Input.getMouseDX() / 1000f;
+		level.camera.rotation.x += Input.getMouseDY() / 1000f;
 		
-		if(Input.isKeyPressed(Keys.SPACE)){
-			velocity.y = -300;
+		if(Input.isKeyDown(Keys.SPACE)){
+			level.camera.position.y += speed * FTec.deltaTime;
 		}
-		velocity.x = 0;
-		if(Input.isKeyDown(Keys.LEFT)){
-			velocity.x += 4 * 60;
+		if(Input.isKeyDown(Keys.LEFT_SHIFT)){
+			level.camera.position.y -= speed * FTec.deltaTime;
 		}
-		if(Input.isKeyDown(Keys.RIGHT)){
-			velocity.x -= 4 * 60;
+		if(Input.isKeyDown(Keys.W)){
+			float angle = level.camera.rotation.y - Mathf.PI / 2;
+			float s = Mathf.sin(angle);
+			float c = Mathf.cos(angle);
+
+			level.camera.position.x += c * FTec.deltaTime * speed;
+			level.camera.position.z += s * FTec.deltaTime * speed;
 		}
-		velocity.y += 1024 * FTec.deltaTime;
+		if(Input.isKeyDown(Keys.S)){
+			float angle = level.camera.rotation.y - Mathf.PI / 2;
+			
+			float s = Mathf.sin(angle);
+			float c = Mathf.cos(angle);
+			
+
+			level.camera.position.x -= c * FTec.deltaTime * speed;
+			level.camera.position.z -= s * FTec.deltaTime * speed;
+		}
+		if(Input.isKeyDown(Keys.A)){
+			float angle = level.camera.rotation.y;
+			
+			float s = Mathf.sin(angle);
+			float c = Mathf.cos(angle);
+			
+
+			level.camera.position.x -= c * FTec.deltaTime * speed;
+			level.camera.position.z -= s * FTec.deltaTime * speed;
+		}
+		if(Input.isKeyDown(Keys.D)){
+			float angle = level.camera.rotation.y;
+			
+			float s = Mathf.sin(angle);
+			float c = Mathf.cos(angle);
+			
+
+			level.camera.position.x += c * FTec.deltaTime * speed;
+			level.camera.position.z += s * FTec.deltaTime * speed;
+		}
 		
-		transform.position.add(velocity.clone().mul(FTec.deltaTime));
+		Input.setMouseGrabbed(true); 
 	}
 	
 	@Override
 	public void render(Renderer renderer) {
-		super.render(renderer);
+		renderer.model.setIdentity();
 	}
 }

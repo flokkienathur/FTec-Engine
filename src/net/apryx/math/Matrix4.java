@@ -67,6 +67,53 @@ public class Matrix4 {
 		return out.toString();
 	}
 	
+	public void rotateX(float angle){
+		//optimized matrix matrix product with rotation matrix
+
+		//[ 0, 1, 2, 3]
+		//[ 4, c,-s, 7]
+		//[ 8, s, c,11]
+		//[12,13,14,15]
+		
+		float c = Mathf.cos(angle);
+		float s = Mathf.sin(angle);
+		
+		//prevent data loss
+		float d1, d2;
+		
+		for(int row = 0; row < 4; row++){
+			//row start index
+			int i = row * 4;
+			d1 = data[i + 1];
+			d2 = data[i + 2];
+			data[i + 1] = d1 * c  + d2 * s;
+			data[i + 2] = d1 * -s + d2 * c;
+		}
+	}
+	
+	public void rotateY(float angle){
+		//optimized matrix matrix product with rotation matrix
+
+		//[ c, 1, s, 3]
+		//[ 4, 5, 6, 7]
+		//[-s, 9, c,11]
+		//[12,13,14,15]
+		
+		float c = Mathf.cos(angle);
+		float s = Mathf.sin(angle);
+		
+		//prevent data loss
+		float d1, d2;
+		
+		for(int row = 0; row < 4; row++){
+			//row start index
+			int i = row * 4;
+			d1 = data[i];
+			d2 = data[i + 2];
+			data[i + 0] = d1 * c + d2 * -s;
+			data[i + 2] = d1 * s + d2 * c ;
+		}
+	}
 	
 	public void rotateZ(float angle){
 		//optimized matrix matrix product with rotation matrix
@@ -134,4 +181,27 @@ public class Matrix4 {
 			result[i + 3] = a[i] * b[3] + a[i + 1] * b[7] + a[i + 2] * b[11] + a[i + 3] * b[15];
 		}
 	}
+	
+	public static Matrix4 getProjectionMatrix(float fov, float asp, float n,
+            float f) {
+		
+        float uh = 1f / Mathf.tan(Mathf.toRadians(fov / 2));
+        float uw = uh;
+         
+        /*return new Matrix4(new float[]{
+                -uh / asp, 0, 0, 0,
+                0, uw , 0, 0,
+                0 , 0, (f + n) / (f - n), -2.0f * f * n / (f - n),
+                0, 0, 1, 0
+                 
+        });*/
+        
+        return new Matrix4(new float[]{
+        		uh/asp, 0, 0, 0,
+                0, uw, 0, 0,
+                0, 0, (n+f)/(n-f), (2*n*f)/(n-f),
+                0, 0, -1, 0
+                 
+        });
+    }
 }

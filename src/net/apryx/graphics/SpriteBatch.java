@@ -20,6 +20,7 @@ public class SpriteBatch extends Batch{
 	
 	private ShaderProgram defaultShader;
 	private Texture defaultTexture;
+	private Camera defaultCamera;
 
 	private FloatBuffer vertexBuffer;
 	private FloatBuffer colorBuffer;
@@ -36,6 +37,7 @@ public class SpriteBatch extends Batch{
 	private Texture texture;
 	private Camera camera;
 	private ShaderProgram shader;
+	private Surface surface;
 	private Matrix4 modelMatrix;
 	private Color4 blend;
 	
@@ -66,12 +68,12 @@ public class SpriteBatch extends Batch{
 		vao.setPointer(ShaderConstants.NORMAL_INDEX, normals, 3, 0, 0);
 		
 		defaultShader = ShaderLoader.createProgram(new File("res/default_vertex.glsl"), new File("res/default_fragment.glsl"));
-		
 		defaultTexture = TextureLoader.loadTexture(1, 1, BufferUtils.createFloatBuffer(new float[]{1,1,1}), Texture.RGB);
+		defaultCamera = new OrthagonalCamera(1, 1);
 		
 		setTexture(defaultTexture);
 		setShader(defaultShader);
-		setCamera(new OrthagonalCamera(1, 1));
+		setCamera(defaultCamera);
 		
 		modelMatrix = new Matrix4();
 		modelMatrix.setIdentity();
@@ -161,9 +163,12 @@ public class SpriteBatch extends Batch{
 
 	@Override
 	public void draw() {
+		if(surface != null)
+			surface.bind();
+		
 		shader.use();
 		
-		camera.setup();
+		camera.setup(surface != null);
 		
 		shader.setUniformMatrixView(camera.view);
 		shader.setUniformMatrixProjection(camera.projection);
@@ -180,6 +185,9 @@ public class SpriteBatch extends Batch{
 		drawCalls++;
 		
 		vao.drawArrays(GL.TRIANGLES, 0, length);
+		
+		if(surface != null)
+			surface.unbind();
 	}
 
 	public Texture getTexture() {
@@ -198,13 +206,34 @@ public class SpriteBatch extends Batch{
 		
 		this.texture = texture;
 	}
+	
+	public void setSurface(Surface surface) {
+		if(drawing){
+			if(surface == null && this.surface != null)
+				flush();
+			else if(this.surface == null && surface != null)
+				flush();
+			else if(!(surface == null && this.surface == null) &&surface.getId() != this.surface.getId()){
+				flush();
+			}
+		}
+		this.surface = surface;
+	}
+	
+	public Surface getSurface() {
+		return surface;
+	}
 
 	public Camera getCamera() {
 		return camera;
 	}
 
 	public void setCamera(Camera camera) {
-		//TODO flush?
+		if(camera == null)
+			camera = defaultCamera;
+		
+		if(drawing)
+			flush();
 		this.camera = camera;
 	}
 
@@ -238,14 +267,22 @@ public class SpriteBatch extends Batch{
 	}
 	
 	public void drawSprite(Sprite sprite, float x, float y, float xScale, float yScale, float rotation){
+		drawTexture(sprite.getTexture(), sprite.getWidth(), sprite.getHeight(), sprite.getxOffset(), sprite.getyOffset(), x, y, xScale, yScale, rotation);
+	}
+	
+	public void drawTexture(Texture texture, float width, float height, float x, float y, float xScale, float yScale, float rotation){
+		drawTexture(texture, width, height, 0, 0, x, y, xScale, yScale, rotation);
+	}
+	
+	public void drawTexture(Texture texture, float width, float height, float xOffset, float yOffset, float x, float y, float xScale, float yScale, float rotation){
 		float s, c, x1, x2, x3, x4, y1, y2, y3, y4, w, h, xo, yo;
 		Texture t;
 		
-		w = sprite.getWidth() * xScale;
-		h = sprite.getHeight() * yScale;
+		w = width * xScale;
+		h = height * yScale;
 
-		xo = sprite.getxOffset() * xScale;
-		yo = sprite.getyOffset() * yScale;
+		xo = xOffset * xScale;
+		yo = yOffset * yScale;
 		
 		if(rotation == 0){
 			//1 --- 2
@@ -289,7 +326,7 @@ public class SpriteBatch extends Batch{
 		//|		|
 		//4 --- 3
 		
-		t = sprite.getTexture();
+		t = texture;
 		
 		setTexture(t);
 		

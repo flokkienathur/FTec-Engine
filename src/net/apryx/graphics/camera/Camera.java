@@ -22,8 +22,12 @@ public abstract class Camera {
 		view = new Matrix4();
 		projection = new Matrix4();
 	}
+	
+	public void setup(){
+		setup(false);
+	}
 
-	public abstract void setup();
+	public abstract void setup(boolean flipped);
 	
 	public float getNear() {
 		return near;

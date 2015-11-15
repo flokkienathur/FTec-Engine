@@ -27,9 +27,9 @@ public class TestEntity extends Entity{
 		y = Mathf.random() * 90;
 		a = Mathf.random() * 6.28f;
 		
-		hspeed = 64 * Mathf.random() - 32;
+		/*hspeed = 64 * Mathf.random() - 32;
 		vspeed = 64 * Mathf.random() - 32;
-		rspeed = 4 * Mathf.random() - 2;
+		rspeed = 4 * Mathf.random() - 2;*/
 	}
 	
 	float a = 0;

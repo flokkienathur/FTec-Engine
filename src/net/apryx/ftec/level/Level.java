@@ -23,17 +23,21 @@ public class Level {
 		batch.setCamera(camera);
 	}
 	
-	public void update(){
+	public void update(){	
 		for(int i = 0; i < entities.size(); i++){
 			entities.get(i).update();
 		}
 	}
 	
 	public void render(){
+		batch.setCamera(camera);
+		
 		batch.begin();
+		
 		for(int i = 0; i < entities.size(); i++){
 			entities.get(i).render(batch);
 		}
+		
 		batch.end();
 	}
 	

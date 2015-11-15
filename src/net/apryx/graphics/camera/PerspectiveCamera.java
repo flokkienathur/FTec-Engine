@@ -12,7 +12,7 @@ public class PerspectiveCamera extends Camera{
 		this.far = 100f;
 	}
 	
-	public void setup(){
+	public void setup(boolean flipped){
 		view.setIdentity();
 
 		view.rotateZ(rotation.z);

@@ -12,7 +12,7 @@ public class OrthagonalCamera extends Camera{
 		this.far = 100f;
 	}
 	
-	public void setup(){
+	public void setup(boolean flipped){
 		view.setIdentity();
 
 		view.rotateZ(rotation.z);
@@ -20,6 +20,11 @@ public class OrthagonalCamera extends Camera{
 		view.rotateY(rotation.y);
 		view.translate(-position.x, -position.y, -position.z);
 		
-		projection = Matrix4.getOrthagonalMatrix(0, size.x, size.y, 0, -100, 100);
+		if(flipped){
+			projection = Matrix4.getOrthagonalMatrix(0, size.x, 0, size.y, -100, 100);
+		}else{
+			projection = Matrix4.getOrthagonalMatrix(0, size.x, size.y, 0, -100, 100);
+		}
+		
 	}
 }

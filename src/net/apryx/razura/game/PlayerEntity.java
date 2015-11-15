@@ -1,10 +1,10 @@
 package net.apryx.razura.game;
 
-import net.apryx.ftec.engine.FTec;
 import net.apryx.ftec.level.Entity;
 import net.apryx.input.Input;
 import net.apryx.input.Keys;
 import net.apryx.math.Mathf;
+import net.apryx.timing.Time;
 
 public class PlayerEntity extends Entity{
 	
@@ -20,18 +20,18 @@ public class PlayerEntity extends Entity{
 		level.camera.rotation.x += Input.getMouseDY() / 1000f;
 		
 		if(Input.isKeyDown(Keys.SPACE)){
-			level.camera.position.y += speed * FTec.deltaTime;
+			level.camera.position.y += speed * Time.deltaTime;
 		}
 		if(Input.isKeyDown(Keys.LEFT_SHIFT)){
-			level.camera.position.y -= speed * FTec.deltaTime;
+			level.camera.position.y -= speed * Time.deltaTime;
 		}
 		if(Input.isKeyDown(Keys.W)){
 			float angle = level.camera.rotation.y - Mathf.PI / 2;
 			float s = Mathf.sin(angle);
 			float c = Mathf.cos(angle);
 
-			level.camera.position.x += c * FTec.deltaTime * speed;
-			level.camera.position.z += s * FTec.deltaTime * speed;
+			level.camera.position.x += c * Time.deltaTime * speed;
+			level.camera.position.z += s * Time.deltaTime * speed;
 		}
 		if(Input.isKeyDown(Keys.S)){
 			float angle = level.camera.rotation.y - Mathf.PI / 2;
@@ -40,8 +40,8 @@ public class PlayerEntity extends Entity{
 			float c = Mathf.cos(angle);
 			
 
-			level.camera.position.x -= c * FTec.deltaTime * speed;
-			level.camera.position.z -= s * FTec.deltaTime * speed;
+			level.camera.position.x -= c * Time.deltaTime * speed;
+			level.camera.position.z -= s * Time.deltaTime * speed;
 		}
 		if(Input.isKeyDown(Keys.A)){
 			float angle = level.camera.rotation.y;
@@ -50,8 +50,8 @@ public class PlayerEntity extends Entity{
 			float c = Mathf.cos(angle);
 			
 
-			level.camera.position.x -= c * FTec.deltaTime * speed;
-			level.camera.position.z -= s * FTec.deltaTime * speed;
+			level.camera.position.x -= c * Time.deltaTime * speed;
+			level.camera.position.z -= s * Time.deltaTime * speed;
 		}
 		if(Input.isKeyDown(Keys.D)){
 			float angle = level.camera.rotation.y;
@@ -60,8 +60,8 @@ public class PlayerEntity extends Entity{
 			float c = Mathf.cos(angle);
 			
 
-			level.camera.position.x += c * FTec.deltaTime * speed;
-			level.camera.position.z += s * FTec.deltaTime * speed;
+			level.camera.position.x += c * Time.deltaTime * speed;
+			level.camera.position.z += s * Time.deltaTime * speed;
 		}
 		
 		Input.setMouseGrabbed(true); 

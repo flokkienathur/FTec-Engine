@@ -1,4 +1,4 @@
-package net.apryx.graphics;
+package net.apryx.graphics.opengl;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;

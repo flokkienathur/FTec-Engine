@@ -1,5 +1,8 @@
 package net.apryx.graphics;
 
+import net.apryx.graphics.opengl.VAO;
+import net.apryx.graphics.opengl.VBO;
+
 public abstract class Batch {
 	protected VBO vertices;
 	protected VBO colors;

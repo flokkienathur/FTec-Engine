@@ -1,5 +1,7 @@
 package net.apryx.graphics;
 
+import net.apryx.graphics.opengl.GL;
+import net.apryx.graphics.opengl.Texture;
 import net.apryx.math.Mathf;
 
 public final class Graphics {

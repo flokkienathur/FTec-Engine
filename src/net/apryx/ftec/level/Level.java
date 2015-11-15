@@ -2,9 +2,9 @@ package net.apryx.ftec.level;
 
 import java.util.ArrayList;
 
-import net.apryx.graphics.Camera;
-import net.apryx.graphics.OrthagonalCamera;
 import net.apryx.graphics.SpriteBatch;
+import net.apryx.graphics.camera.Camera;
+import net.apryx.graphics.camera.OrthagonalCamera;
 
 public class Level {
 	

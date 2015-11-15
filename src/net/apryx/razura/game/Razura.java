@@ -5,8 +5,8 @@ import net.apryx.ftec.engine.FTec;
 import net.apryx.ftec.engine.Game;
 import net.apryx.ftec.graphics.TextureLoader;
 import net.apryx.ftec.level.Level;
-import net.apryx.graphics.GL;
-import net.apryx.graphics.Texture;
+import net.apryx.graphics.opengl.GL;
+import net.apryx.graphics.opengl.Texture;
 
 public class Razura extends Game{
 

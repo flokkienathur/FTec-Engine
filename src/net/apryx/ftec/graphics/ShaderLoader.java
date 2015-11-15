@@ -2,9 +2,9 @@ package net.apryx.ftec.graphics;
 
 import java.io.File;
 
-import net.apryx.graphics.GL;
-import net.apryx.graphics.Shader;
-import net.apryx.graphics.ShaderProgram;
+import net.apryx.graphics.opengl.GL;
+import net.apryx.graphics.opengl.Shader;
+import net.apryx.graphics.opengl.ShaderProgram;
 
 /**
  * Loads shaders and sets things up for the Engine pipeline

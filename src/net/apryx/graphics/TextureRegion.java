@@ -1,12 +1,13 @@
 package net.apryx.graphics;
 
-//TODO implement class
+import net.apryx.graphics.opengl.Texture;
+
 public class TextureRegion extends Texture{
 	
 	protected float x1, x2, y1, y2;
 	
 	public TextureRegion(Texture texture, int x, int y, int width, int height){
-		this.id = texture.id;
+		this.id = texture.getId();
 		this.width = width;
 		this.height = height;
 

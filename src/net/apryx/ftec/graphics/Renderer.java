@@ -3,13 +3,13 @@ package net.apryx.ftec.graphics;
 import java.io.File;
 
 import net.apryx.graphics.Batch;
-import net.apryx.graphics.Camera;
 import net.apryx.graphics.Color4;
-import net.apryx.graphics.GL;
-import net.apryx.graphics.ShaderProgram;
-import net.apryx.graphics.Texture;
+import net.apryx.graphics.camera.Camera;
 import net.apryx.graphics.mesh.MeshBatch;
 import net.apryx.graphics.mesh.QuadMesh;
+import net.apryx.graphics.opengl.GL;
+import net.apryx.graphics.opengl.ShaderProgram;
+import net.apryx.graphics.opengl.Texture;
 import net.apryx.math.Matrix4;
 import net.apryx.utils.BufferUtils;
 

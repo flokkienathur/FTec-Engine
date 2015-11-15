@@ -7,7 +7,7 @@ import java.nio.FloatBuffer;
 
 import javax.imageio.ImageIO;
 
-import net.apryx.graphics.Texture;
+import net.apryx.graphics.opengl.Texture;
 import net.apryx.utils.BufferUtils;
 
 public class TextureLoader {

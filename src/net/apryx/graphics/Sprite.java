@@ -1,5 +1,7 @@
 package net.apryx.graphics;
 
+import net.apryx.graphics.opengl.Texture;
+
 //TODO implement class
 public class Sprite {
 	

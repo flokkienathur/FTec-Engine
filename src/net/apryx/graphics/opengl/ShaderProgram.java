@@ -1,4 +1,4 @@
-package net.apryx.graphics;
+package net.apryx.graphics.opengl;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
 import net.apryx.ftec.graphics.ShaderConstants;
+import net.apryx.graphics.Color4;
 import net.apryx.math.Matrix4;
 import net.apryx.utils.BufferUtils;
 

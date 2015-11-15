@@ -1,4 +1,4 @@
-package net.apryx.graphics;
+package net.apryx.graphics.camera;
 
 import net.apryx.math.Matrix4;
 import net.apryx.math.Vector2;

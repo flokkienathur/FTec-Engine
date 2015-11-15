@@ -5,7 +5,7 @@ import java.nio.IntBuffer;
 
 import net.apryx.ftec.graphics.ShaderConstants;
 import net.apryx.graphics.Batch;
-import net.apryx.graphics.GL;
+import net.apryx.graphics.opengl.GL;
 import net.apryx.utils.BufferUtils;
 
 public class MeshBatch extends Batch{

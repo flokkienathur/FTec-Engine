@@ -2,16 +2,17 @@ package net.apryx.ftec.engine;
 
 import org.lwjgl.opengl.GL11;
 
-import net.apryx.graphics.GL;
 import net.apryx.graphics.Window;
+import net.apryx.graphics.opengl.GL;
 import net.apryx.timing.Time;
 
 public class FTec {
 	
 	public static Window window;
 	
-	public static float deltaTime;
-	public static float runTime;
+	//local copy for reasons
+	private static float deltaTime;
+	private static float runTime;
 	
 	public static void clear(){
 		GL.clear(GL.DEPTH_BUFFER_BIT | GL.COLOR_BUFFER_BIT);

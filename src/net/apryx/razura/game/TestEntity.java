@@ -3,8 +3,8 @@ package net.apryx.razura.game;
 import net.apryx.ftec.level.Entity;
 import net.apryx.graphics.Sprite;
 import net.apryx.graphics.SpriteBatch;
-import net.apryx.graphics.Texture;
 import net.apryx.graphics.TextureRegion;
+import net.apryx.graphics.opengl.Texture;
 import net.apryx.math.Mathf;
 import net.apryx.timing.Time;
 

@@ -1,4 +1,4 @@
-package net.apryx.graphics;
+package net.apryx.graphics.opengl;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;

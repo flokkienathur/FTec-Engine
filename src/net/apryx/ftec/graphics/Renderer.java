@@ -13,6 +13,7 @@ import net.apryx.graphics.mesh.QuadMesh;
 import net.apryx.math.Matrix4;
 import net.apryx.utils.BufferUtils;
 
+@Deprecated
 public class Renderer {
 
 	private ShaderProgram defaultShader;

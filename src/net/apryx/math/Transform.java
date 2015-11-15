@@ -1,5 +1,6 @@
 package net.apryx.math;
 
+@Deprecated
 public class Transform {
 	
 	public Bounds bounds;

@@ -3,6 +3,7 @@ package net.apryx.ftec.level;
 import java.util.ArrayList;
 
 import net.apryx.graphics.Camera;
+import net.apryx.graphics.OrthagonalCamera;
 import net.apryx.graphics.SpriteBatch;
 
 public class Level {
@@ -15,7 +16,7 @@ public class Level {
 	
 	public Level(){
 		entities = new ArrayList<Entity>();
-		camera = new Camera();
+		camera = new OrthagonalCamera(160,90);
 		
 		batch = new SpriteBatch(1024);
 		
@@ -37,6 +38,13 @@ public class Level {
 	}
 	
 	public void addEntity(Entity entity){
+		entities.add(entity);
+		entity.setLevel(this);
+	}
+	
+	public void addEntity(Entity entity, float x, float y){
+		entity.x = x;
+		entity.y = y;
 		entities.add(entity);
 		entity.setLevel(this);
 	}

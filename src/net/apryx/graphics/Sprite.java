@@ -6,7 +6,15 @@ public class Sprite {
 	private float width, height, xOffset, yOffset;
 	private Texture texture;
 	
-	public Sprite(Texture texture){
+	public Sprite(Texture texture, float width, float height){
+		this(texture, width, height, 0, 0);
+	}
+	
+	public Sprite(Texture texture, float width, float height, float xOffset, float yOffset){
+		this.width = width;
+		this.height = height;
+		this.xOffset = xOffset;
+		this.yOffset = yOffset;
 		this.setTexture(texture);
 	}
 

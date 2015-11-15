@@ -65,7 +65,7 @@ public class SpriteBatch extends Batch{
 		
 		setTexture(defaultTexture);
 		setShader(defaultShader);
-		setCamera(new Camera());
+		setCamera(new OrthagonalCamera(1, 1));
 		
 		modelMatrix = new Matrix4();
 		modelMatrix.setIdentity();

@@ -12,12 +12,11 @@ public class TestEntity extends Entity{
 	
 	private Sprite sprite;
 	
-	private float x, y;
-	private float hspeed, vspeed, rspeed;
+	private float rspeed;
 	
 	public TestEntity(Texture t){
 		TextureRegion region = new TextureRegion(t, 0, 0, 32, 32);
-		sprite = new Sprite(region);
+		sprite = new Sprite(region, 32, 32);
 		sprite.setWidth(16);
 		sprite.setHeight(16);
 
@@ -34,6 +33,7 @@ public class TestEntity extends Entity{
 	}
 	
 	float a = 0;
+	
 	@Override
 	public void update() {
 		super.update();
@@ -59,6 +59,6 @@ public class TestEntity extends Entity{
 	
 	@Override
 	public void render(SpriteBatch batch) {
-		batch.drawSprite(sprite, x, y, 1f, 1f, a);
+		batch.drawSprite(sprite, x, y, 1, 1, a);
 	}
 }

@@ -21,10 +21,10 @@ public class Razura extends Game{
 		Texture t = TextureLoader.loadTexture(new File("res/logo.png"));
 		Texture t2 = TextureLoader.loadTexture(new File("res/tile.png"));
 
-		for(int i = 0; i < 10000; i++){
+		for(int i = 0; i < 10; i++){
 			level.addEntity(new TestEntity(t));
 		}
-		for(int i = 0; i < 10000; i++){
+		for(int i = 0; i < 10; i++){
 			level.addEntity(new TestEntity(t2));
 		}
 	}

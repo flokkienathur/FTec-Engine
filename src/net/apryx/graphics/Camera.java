@@ -4,7 +4,7 @@ import net.apryx.math.Matrix4;
 import net.apryx.math.Vector2;
 import net.apryx.math.Vector3;
 
-public class Camera {
+public abstract class Camera {
 	
 	public Matrix4 view;
 	public Matrix4 projection;
@@ -13,27 +13,31 @@ public class Camera {
 	public Vector3 rotation;
 	public Vector2 size;
 	
+	protected float near, far;
+	
 	public Camera(){
 		position = new Vector3();
 		rotation = new Vector3();
-		size = new Vector2(160,90);
+		size = new Vector2(1,1);
 		view = new Matrix4();
 		projection = new Matrix4();
 	}
 
-	public void setup(){
-		view.setIdentity();
+	public abstract void setup();
+	
+	public float getNear() {
+		return near;
+	}
 
-		/*view.rotateZ(rotation.z);
-		view.rotateX(rotation.x);
-		view.rotateY(rotation.y);
-		view.translate(-position.x, -position.y, -position.z);*/
-		
-		/*projection.setIdentity();
-		projection.scale(2f/size.x, 2f/size.y, 1);*/
-		
-		projection = Matrix4.getOrthagonalMatrix(0, size.x, size.y, 0, -100, 100);
+	public void setNear(float near) {
+		this.near = near;
+	}
 
-		/*projection = Matrix4.getProjectionMatrix(90, size.x / size.y, 0.01f, 1000);*/
+	public float getFar() {
+		return far;
+	}
+
+	public void setFar(float far) {
+		this.far = far;
 	}
 }

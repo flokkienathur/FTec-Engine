@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import net.apryx.graphics.GL;
 import net.apryx.graphics.Window;
+import net.apryx.timing.Time;
 
 public class FTec {
 	
@@ -17,19 +18,25 @@ public class FTec {
 	}
 
 	public static void create(Game game){
-		 window = new Window(1280,720,false);
+		 window = new Window(1280, 720, false);
 		 
 		 window.setVSync(false);
 		 window.setVisible(true);
 		 
+		 window.setCursorHidden(true);
+		 
 		 GL11.glEnable(GL11.GL_DEPTH_TEST);
-		 GL11.glEnable(GL11.GL_CULL_FACE);
+		 GL11.glEnable(GL11.GL_BLEND); 
+		 GL11.glBlendFunc (GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		 //GL11.glEnable(GL11.GL_CULL_FACE);
 		 
 		 game.init();
 		 
 		 long previous = System.nanoTime();
 		 long sum = 0;
 		 int fps = 0;
+		 
+		 Time.deltaTime = 1f / 60f;
 		 
 		 while(!game.isCloseRequested()){
 			 window.pollEvents();
@@ -41,10 +48,14 @@ public class FTec {
 			 deltaTime = delta / 1000000000f;
 			 runTime += deltaTime;
 			 
+			 Time.deltaTime = (Time.deltaTime * 99 + deltaTime) / 100f;
+			 Time.runTime = runTime;
+			 
 			 sum += delta;
 			 
 			 if(sum > 1000000000){
 				 System.out.println("FPS: " + fps);
+				 Time.fps = fps;
 				 sum -= 1000000000;
 				 fps = 0;
 			 }

@@ -16,7 +16,7 @@ public class Camera {
 	public Camera(){
 		position = new Vector3();
 		rotation = new Vector3();
-		size = new Vector2(1,1);
+		size = new Vector2(160,90);
 		view = new Matrix4();
 		projection = new Matrix4();
 	}
@@ -24,11 +24,16 @@ public class Camera {
 	public void setup(){
 		view.setIdentity();
 
-		view.rotateZ(rotation.z);
+		/*view.rotateZ(rotation.z);
 		view.rotateX(rotation.x);
 		view.rotateY(rotation.y);
-		view.translate(-position.x, -position.y, -position.z);
+		view.translate(-position.x, -position.y, -position.z);*/
+		
+		/*projection.setIdentity();
+		projection.scale(2f/size.x, 2f/size.y, 1);*/
+		
+		projection = Matrix4.getOrthagonalMatrix(0, size.x, size.y, 0, -100, 100);
 
-		projection = Matrix4.getProjectionMatrix(90, size.x / size.y, 0.01f, 1000);
+		/*projection = Matrix4.getProjectionMatrix(90, size.x / size.y, 0.01f, 1000);*/
 	}
 }

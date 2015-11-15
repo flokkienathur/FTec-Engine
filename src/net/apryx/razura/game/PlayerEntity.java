@@ -1,7 +1,6 @@
 package net.apryx.razura.game;
 
 import net.apryx.ftec.engine.FTec;
-import net.apryx.ftec.graphics.Renderer;
 import net.apryx.ftec.level.Entity;
 import net.apryx.input.Input;
 import net.apryx.input.Keys;
@@ -68,8 +67,5 @@ public class PlayerEntity extends Entity{
 		Input.setMouseGrabbed(true); 
 	}
 	
-	@Override
-	public void render(Renderer renderer) {
-		renderer.model.setIdentity();
-	}
+	
 }

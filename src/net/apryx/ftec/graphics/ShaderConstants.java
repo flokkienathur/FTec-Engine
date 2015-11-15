@@ -17,5 +17,4 @@ public class ShaderConstants {
 	public static final String UNIFORM_MATRIX_PROJECTION = "u_MatrixProjection";
 	public static final String UNIFORM_BLEND = "u_Blend";
 	
-	
 }

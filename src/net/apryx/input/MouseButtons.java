@@ -1,7 +1,7 @@
 package net.apryx.input;
 
-public final class Mouse {
-	private Mouse() {
+public final class MouseButtons {
+	private MouseButtons() {
 	}
 
 	public static final int BUTTON_1 = 0;
@@ -16,4 +16,5 @@ public final class Mouse {
 	public static final int RIGHT = BUTTON_2;
 	public static final int MIDDLE = BUTTON_3;
 	public static final int LAST = BUTTON_8;
+	
 }

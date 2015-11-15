@@ -14,6 +14,8 @@ public class GL {
 	public static final int LINES = GL11.GL_LINES;
 	public static final int QUADS = GL11.GL_QUADS;
 	
+	public static int hans = 0;
+	
 	public static void clearColor(float r, float g, float b, float a){
 		GL11.glClearColor(r,g,b,a);
 	}

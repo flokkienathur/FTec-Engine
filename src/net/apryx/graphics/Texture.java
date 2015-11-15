@@ -23,7 +23,8 @@ public class Texture {
 	public static final int RGB = GL11.GL_RGB;
 	public static final int RGBA = GL11.GL_RGBA;
 	
-	int id;
+	protected int width, height;
+	protected int id;
 	
 	public Texture(){
 		id = GL11.glGenTextures();
@@ -42,19 +43,61 @@ public class Texture {
 	}
 
 	public void setData(int width, int height, FloatBuffer data, int colorDepth){
+		setWidth(width);
+		setHeight(height);
 		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, colorDepth, width, height, 0, colorDepth, GL11.GL_FLOAT, data);
 	}
 
 	public void setData(int width, int height, IntBuffer data, int colorDepth){
+		setWidth(width);
+		setHeight(height);
 		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, colorDepth, width, height, 0, colorDepth, GL11.GL_UNSIGNED_INT, data);
 	}
 	
 	public void setData(int width, int height, ByteBuffer data, int colorDepth){
+		setWidth(width);
+		setHeight(height);
 		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, colorDepth, width, height, 0, colorDepth, GL11.GL_UNSIGNED_BYTE, data);
 	}
 	
 	public void dispose(){
 		GL11.glDeleteTextures(id);
+	}
+	
+	public float getTexCoordX() {
+		return 0;
+	}
+	
+	public float getTexCoordY() {
+		return 0;
+	}
+	
+	public float getTexCoordX2() {
+		return 1;
+	}
+	
+	public float getTexCoordY2() {
+		return 1;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	private void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	private void setHeight(int height) {
+		this.height = height;
+	}
+
+	public int getId() {
+		return id;
 	}
 	
 }

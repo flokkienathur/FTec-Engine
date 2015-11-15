@@ -68,7 +68,7 @@ public class Tilemap extends Entity{
 		
 		System.out.println(size);
 
-		batch = new SpriteBatch(renderer, size);
+		batch = new SpriteBatch(size);
 		
 		batch.begin();
 		
@@ -175,8 +175,4 @@ public class Tilemap extends Entity{
 		return tiles[x + y * width + z * height * depth];
 	}
 	
-	@Override
-	public void render(Renderer renderer) {
-		renderer.draw(batch, null);
-	}
 }

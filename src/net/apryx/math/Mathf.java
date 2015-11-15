@@ -76,4 +76,8 @@ public class Mathf {
 	public static float toRadians(float x){
 		return (float) Math.toRadians(x);
 	}
+	
+	public static float random(){
+		return (float) Math.random();
+	}
 }

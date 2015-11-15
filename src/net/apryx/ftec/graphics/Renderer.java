@@ -42,7 +42,10 @@ public class Renderer {
 	}
 	
 	public void setShader(ShaderProgram program){
-		shader = program;
+		if(program == null)
+			shader = defaultShader;
+		else
+			shader = program;
 	}
 	
 	public void clear(){
@@ -91,7 +94,6 @@ public class Renderer {
 	
 	public void dispose(){
 		defaultShader.dispose();
-		quad.dispose();
 		white.dispose();
 	}
 	

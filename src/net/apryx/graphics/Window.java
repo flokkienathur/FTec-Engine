@@ -8,8 +8,9 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 import java.util.Arrays;
 
+import net.apryx.input.InputManager;
 import net.apryx.input.Keys;
-import net.apryx.input.Mouse;
+import net.apryx.input.MouseButtons;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
@@ -45,6 +46,8 @@ public final class Window {
 	
 	private long windowHandle;
 	
+	private InputManager input;
+	
 	private boolean fullscreen;
 	
 	private String title = "";
@@ -66,9 +69,11 @@ public final class Window {
 		keyPresses = new boolean[Keys.LAST];
 		keyReleases = new boolean[Keys.LAST];
 		
-		mouseStates = new boolean[Mouse.LAST];
-		mousePresses = new boolean[Mouse.LAST];
-		mouseReleases = new boolean[Mouse.LAST];
+		mouseStates = new boolean[MouseButtons.LAST];
+		mousePresses = new boolean[MouseButtons.LAST];
+		mouseReleases = new boolean[MouseButtons.LAST];
+		
+		setInput(new InputManager());
 		
 		if(windowCount != 0)
 			System.err.println("Multiple windows active. This may result in some unexpected behaviour.");
@@ -202,6 +207,8 @@ public final class Window {
 		mouseDX = 0;
 		mouseDY = 0;
 		
+		input.poll();
+		
 		glfwPollEvents();
 	}
 	
@@ -267,6 +274,14 @@ public final class Window {
 		}
 	}
 	
+	public InputManager getInput() {
+		return input;
+	}
+
+	public void setInput(InputManager input) {
+		this.input = input;
+	}
+
 	private class CursorCallback extends GLFWCursorPosCallback{
 
 		@Override

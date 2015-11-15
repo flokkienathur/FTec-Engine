@@ -2,20 +2,24 @@ package net.apryx.ftec.level;
 
 import java.util.ArrayList;
 
-import net.apryx.ftec.graphics.Renderer;
 import net.apryx.graphics.Camera;
+import net.apryx.graphics.SpriteBatch;
 
 public class Level {
 	
 	private ArrayList<Entity> entities;
 	
 	public Camera camera;
-	public Renderer renderer;
 	
-	public Level(Renderer renderer){
+	private SpriteBatch batch;
+	
+	public Level(){
 		entities = new ArrayList<Entity>();
-		this.renderer = renderer;
 		camera = new Camera();
+		
+		batch = new SpriteBatch(1024);
+		
+		batch.setCamera(camera);
 	}
 	
 	public void update(){
@@ -25,13 +29,11 @@ public class Level {
 	}
 	
 	public void render(){
-		renderer.setup(camera);
-		
-		renderer.model.setIdentity();
-		
+		batch.begin();
 		for(int i = 0; i < entities.size(); i++){
-			entities.get(i).render(renderer);
+			entities.get(i).render(batch);
 		}
+		batch.end();
 	}
 	
 	public void addEntity(Entity entity){
@@ -44,6 +46,6 @@ public class Level {
 	}
 	
 	public void dispose(){
-		renderer.dispose();
+		batch.dispose();
 	}
 }

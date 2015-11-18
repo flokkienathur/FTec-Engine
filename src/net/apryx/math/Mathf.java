@@ -80,4 +80,12 @@ public class Mathf {
 	public static float random(){
 		return (float) Math.random();
 	}
+
+	public static float max(float a, float b){
+		return (float) Math.max(a, b);
+	}
+	
+	public static float min(float a, float b){
+		return (float) Math.min(a, b);
+	}
 }

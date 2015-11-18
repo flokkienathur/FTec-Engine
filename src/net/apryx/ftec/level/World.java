@@ -1,12 +1,14 @@
 package net.apryx.ftec.level;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import net.apryx.ftec.engine.FTec;
 import net.apryx.graphics.SpriteBatch;
 import net.apryx.graphics.camera.Camera;
 import net.apryx.graphics.camera.OrthagonalCamera;
 
-public class Level {
+public class World {
 	
 	private ArrayList<Entity> entities;
 	
@@ -14,9 +16,9 @@ public class Level {
 	
 	private SpriteBatch batch;
 	
-	public Level(){
+	public World(){
 		entities = new ArrayList<Entity>();
-		camera = new OrthagonalCamera(160,90);
+		camera = new OrthagonalCamera(FTec.window.getWidth(), FTec.window.getHeight());
 		
 		batch = new SpriteBatch(1024);
 		
@@ -55,6 +57,14 @@ public class Level {
 	
 	public void removeEntity(Entity entity){
 		entities.remove(entity);
+	}
+	
+	public Entity getEntityByIndex(int index){
+		return entities.get(index);
+	}
+	
+	public List<Entity> getEntities(){
+		return entities;
 	}
 	
 	public void dispose(){

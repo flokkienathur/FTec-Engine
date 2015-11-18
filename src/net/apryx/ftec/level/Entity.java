@@ -5,10 +5,11 @@ import net.apryx.graphics.SpriteBatch;
 
 public class Entity {
 	
-	protected Level level;
+	protected World level;
 	
+	protected int layer;
 	protected Sprite sprite;
-	protected float x, y;
+	public float x, y;
 	protected float hspeed, vspeed;
 	
 	public Entity(){
@@ -16,18 +17,17 @@ public class Entity {
 	}
 	
 	public void update(){
-		
 	}
 	
 	public void render(SpriteBatch batch){
 		
 	}
 	
-	public void setLevel(Level level) {
+	public void setLevel(World level) {
 		this.level = level;
 	}
 	
-	public Level getLevel() {
+	public World getLevel() {
 		return level;
 	}
 	
@@ -42,6 +42,10 @@ public class Entity {
 	}
 	public float getBottom(){
 		return y - sprite.getyOffset() + sprite.getHeight();
+	}
+	
+	public int getLayer() {
+		return layer;
 	}
 	
 }

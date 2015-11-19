@@ -12,6 +12,7 @@ import net.apryx.graphics.opengl.GL;
 import net.apryx.graphics.opengl.ShaderProgram;
 import net.apryx.graphics.opengl.Texture;
 import net.apryx.graphics.opengl.VBO;
+import net.apryx.graphics.sprite.Sprite;
 import net.apryx.math.Mathf;
 import net.apryx.math.Matrix4;
 import net.apryx.utils.BufferUtils;

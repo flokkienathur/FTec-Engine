@@ -31,9 +31,12 @@ public class Razura extends Game{
 		level.camera.size.x = 160;
 		level.camera.size.y = 90;
 
-		level.addEntity(new EntityPlayer(), 16, 16);
-
 		level.addEntity(new EntityWall(320, 48), 0, 80);
+		level.addEntity(new EntityWall(16, 16), 100, 80 - 16);
+		level.addEntity(new EntityWall(16, 16), 0, 80 - 16);
+		level.addEntity(new EntityWall(32, 16), 100 - 8, 80 - 8);
+
+		level.addEntity(new EntityPlayer(), 16, 16);
 		
 	}
 

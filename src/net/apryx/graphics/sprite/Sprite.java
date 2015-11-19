@@ -1,4 +1,4 @@
-package net.apryx.graphics;
+package net.apryx.graphics.sprite;
 
 import net.apryx.graphics.opengl.Texture;
 
@@ -24,48 +24,54 @@ public class Sprite {
 		this.setTexture(texture);
 	}
 	
-	public void center(){
+	public Sprite center(){
 		xOffset = getWidth() / 2;
 		yOffset = getHeight() / 2;
+		return this;
 	}
 
 	public float getWidth() {
 		return width;
 	}
 
-	public void setWidth(float width) {
+	public Sprite setWidth(float width) {
 		this.width = width;
+		return this;
 	}
 
 	public float getHeight() {
 		return height;
 	}
 
-	public void setHeight(float height) {
+	public Sprite setHeight(float height) {
 		this.height = height;
+		return this;
 	}
 
 	public float getxOffset() {
 		return xOffset;
 	}
 
-	public void setxOffset(float xOffset) {
+	public Sprite setxOffset(float xOffset) {
 		this.xOffset = xOffset;
+		return this;
 	}
 
 	public float getyOffset() {
 		return yOffset;
 	}
 
-	public void setyOffset(float yOffset) {
+	public Sprite setyOffset(float yOffset) {
 		this.yOffset = yOffset;
+		return this;
 	}
 
 	public Texture getTexture() {
 		return texture;
 	}
 
-	public void setTexture(Texture texture) {
+	public Sprite setTexture(Texture texture) {
 		this.texture = texture;
+		return this;
 	}
 }

@@ -1,8 +1,9 @@
 package net.apryx.ftec.level;
 
-import net.apryx.graphics.Sprite;
 import net.apryx.graphics.SpriteBatch;
+import net.apryx.graphics.sprite.Sprite;
 import net.apryx.math.Mathf;
+import net.apryx.math.collision.Collision2D;
 import net.apryx.timing.Time;
 
 public class Entity {
@@ -13,6 +14,8 @@ public class Entity {
 	protected Sprite sprite;
 	public float x, y;
 	protected float hspeed, vspeed;
+	protected boolean grounded = false;
+	protected float xScale = 1, yScale = 1;
 	
 	public Entity(){
 		sprite = new Sprite(null, 32, 32);
@@ -30,6 +33,9 @@ public class Entity {
 	}
 
 	public void accelerate(float wishspeed, float dir, float acceleration){
+		if(dir == 0)
+			return;
+		
 		float currentSpeed = hspeed * dir;
 		
 		if(currentSpeed > wishspeed)
@@ -55,6 +61,39 @@ public class Entity {
 			currentSpeed = 0;
 		
 		hspeed = currentSpeed * dir;
+	}
+	
+	public void applyMotion(){
+		applyMotion(0);
+	}
+	
+	public Collision2D applyMotion(int layer){
+		return applyMotion(layer, true);
+	}
+	
+	public Collision2D applyMotion(int layer, boolean nullifyOnCollision){
+		if(layer == 0){
+			x += hspeed;
+			y += vspeed;
+			return null;
+		}else{
+			grounded = false;
+			Collision2D collision = new Collision2D(this.level);
+			collision.move(this, hspeed * Time.deltaTime, vspeed * Time.deltaTime, layer);
+			
+			if(collision.collidedBottom()){
+				grounded = true;
+			}
+			if(nullifyOnCollision){
+				if(collision.collidedY()){
+					vspeed = 0;
+				}
+				if(collision.collidedX()){
+					hspeed = 0;
+				}
+			}
+			return collision;
+		}
 	}
 	
 	public void setLevel(World level) {

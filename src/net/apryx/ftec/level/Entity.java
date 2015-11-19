@@ -2,6 +2,8 @@ package net.apryx.ftec.level;
 
 import net.apryx.graphics.Sprite;
 import net.apryx.graphics.SpriteBatch;
+import net.apryx.math.Mathf;
+import net.apryx.timing.Time;
 
 public class Entity {
 	
@@ -21,6 +23,38 @@ public class Entity {
 	
 	public void render(SpriteBatch batch){
 		
+	}
+	
+	public void gravity(float gravity){
+		vspeed += gravity * Time.deltaTime;
+	}
+
+	public void accelerate(float wishspeed, float dir, float acceleration){
+		float currentSpeed = hspeed * dir;
+		
+		if(currentSpeed > wishspeed)
+			return;
+		
+		currentSpeed += acceleration * Time.deltaTime;
+		if(currentSpeed > wishspeed)
+			currentSpeed = wishspeed;
+		
+		hspeed = currentSpeed * dir;
+	}
+	
+	public void friction(float friction){
+		float dir = Mathf.sign(hspeed);
+		float currentSpeed = hspeed * dir;
+		
+		if(currentSpeed == 0)
+			return;
+		
+		currentSpeed -= friction * Time.deltaTime;
+		
+		if(currentSpeed < 0)
+			currentSpeed = 0;
+		
+		hspeed = currentSpeed * dir;
 	}
 	
 	public void setLevel(World level) {

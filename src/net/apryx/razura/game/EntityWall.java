@@ -17,7 +17,9 @@ public class EntityWall extends Entity{
 	public void render(SpriteBatch batch) {
 		super.render(batch);
 		
-		batch.color(0, 0, 1);
+		batch.setTexture(null);
+		
+		batch.color(1, 1, 1);
 		
 		batch.vertex(getLeft(), getTop());
 		batch.vertex(getRight(), getBottom());

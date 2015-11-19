@@ -8,6 +8,10 @@ public class Sprite {
 	private float width, height, xOffset, yOffset;
 	private Texture texture;
 	
+	public Sprite(Texture texture){
+		this(texture, texture.getWidth(), texture.getHeight());
+	}
+	
 	public Sprite(Texture texture, float width, float height){
 		this(texture, width, height, 0, 0);
 	}
@@ -18,6 +22,11 @@ public class Sprite {
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 		this.setTexture(texture);
+	}
+	
+	public void center(){
+		xOffset = getWidth() / 2;
+		yOffset = getHeight() / 2;
 	}
 
 	public float getWidth() {

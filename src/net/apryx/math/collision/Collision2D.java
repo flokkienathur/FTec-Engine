@@ -11,17 +11,23 @@ public class Collision2D {
 	private int entityIndexX;
 	private Entity[] entitiesY;
 	private int entityIndexY;
+	
+	private float lastXMotion;
+	private float lastYMotion;
 
 	public Collision2D(World world){
 		this.world = world;
 		entitiesX = new Entity[64];
 		entitiesY = new Entity[64];
+		
 		clearX();
 		clearY();
 	}
 	
 	public void moveX(Entity entity, float xMotion, int layer){
-		clearY();
+		clearX();
+		
+		lastXMotion = xMotion;
 		
 		for(int i = 0; i < world.getEntities().size(); i++){
 			Entity current = world.getEntityByIndex(i);
@@ -53,7 +59,9 @@ public class Collision2D {
 	}
 	
 	public void moveY(Entity entity, float yMotion, int layer){
-		clearX();
+		clearY();
+		
+		lastYMotion = yMotion;
 		
 		for(int i = 0; i < world.getEntities().size(); i++){
 			Entity current = world.getEntityByIndex(i);
@@ -97,6 +105,22 @@ public class Collision2D {
 	
 	public boolean collidedY(){
 		return entityIndexY > 0;
+	}
+
+	public boolean collidedTop(){
+		return collidedY() && lastYMotion < 0;
+	}
+
+	public boolean collidedBottom(){
+		return collidedY() && lastYMotion > 0;
+	}
+
+	public boolean collidedRight(){
+		return collidedY() && lastXMotion > 0;
+	}
+
+	public boolean collidedLeft(){
+		return collidedY() && lastXMotion < 0;
 	}
 
 

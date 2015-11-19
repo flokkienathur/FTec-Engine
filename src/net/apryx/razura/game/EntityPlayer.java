@@ -5,16 +5,15 @@ import net.apryx.graphics.Sprite;
 import net.apryx.graphics.SpriteBatch;
 import net.apryx.input.Input;
 import net.apryx.input.Keys;
-import net.apryx.math.Mathf;
 import net.apryx.math.collision.Collision2D;
 import net.apryx.math.collision.Layer;
 import net.apryx.timing.Time;
 
 public class EntityPlayer extends Entity{
 	
-	private static float speed = 3 * 60;		//pixels per second
-	private static float gravity = 0.5f * 60 * 60;	//pixels per second^2
-	private static float jumpSpeed = 6f * 60;	//pixels per second
+	private static float speed = 1.5f * 60;		//pixels per second
+	private static float gravity = 0.3f * 60 * 60;	//pixels per second^2
+	private static float jumpSpeed = 4f * 60;	//pixels per second
 	
 	private static float groundAcceleration = 1f * 60 * 60; //pixels per second^2
 	private static float groundFriction = 0.5f * 60 * 60; //pixels per second^2
@@ -25,11 +24,27 @@ public class EntityPlayer extends Entity{
 	private float facing = 1;
 	private boolean grounded = false;
 	
+	private Sprite[] step;
+	private float stepIndex = 0;
+	
+	private Sprite jump;
+	
 	public EntityPlayer(){
 		layer = Layer.PLAYER;
 		
-		sprite = new Sprite(Razura.player);
+		sprite = new Sprite(Razura.playerStill);
 		sprite.center();
+		
+		step = new Sprite[2];
+		
+		step[0] = new Sprite(Razura.playerStep1);
+		step[1] = new Sprite(Razura.playerStep2);
+		
+		step[0].center();
+		step[1].center();
+		
+		jump = new Sprite(Razura.playerJump);
+		jump.center();
 	}
 	
 	@Override
@@ -73,23 +88,29 @@ public class EntityPlayer extends Entity{
 		if(collision.collidedX()){
 			hspeed = 0;
 		}
+		if(hspeed != 0){
+			stepIndex += Time.deltaTime * 8;
+		}
 	}
 	
 	@Override
 	public void render(SpriteBatch batch) {
 		super.render(batch);
 		
-		batch.drawSprite(sprite, x, y, facing, 1);
-		
-		/*batch.color(0, 0, 0);
-		
-		batch.vertex(getLeft(), getTop());
-		batch.vertex(getRight(), getBottom());
-		batch.vertex(getRight(), getTop());
-
-		batch.vertex(getLeft(), getTop());
-		batch.vertex(getLeft(), getBottom());
-		batch.vertex(getRight(), getBottom());*/
+		if(grounded){
+			if(hspeed == 0)
+				batch.drawSprite(sprite, x, y, facing, 1);
+			else{
+				int index = (int)stepIndex % 2;
+				batch.drawSprite(step[index], x, y, facing, 1);
+			}
+		}else{
+			if(vspeed > 0){
+				batch.drawSprite(sprite, x, y, facing, 1);				
+			}else{
+				batch.drawSprite(jump, x, y, facing, 1);	
+			}
+		}
 		
 	}
 	

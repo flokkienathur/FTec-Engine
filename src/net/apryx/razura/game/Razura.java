@@ -11,22 +11,29 @@ import net.apryx.graphics.opengl.Texture;
 public class Razura extends Game{
 
 	private World level;
-	
-	public static Texture player;
+
+	public static Texture playerStill;
+	public static Texture playerStep1;
+	public static Texture playerStep2;
+	public static Texture playerJump;
 	
 	@Override
 	public void init() {
 		GL.clearColor(0,0,0,1);
-		player = TextureLoader.loadTexture(new File("res/player.png"));
+		playerStill = TextureLoader.loadTexture(new File("res/player_still.png"));
+		playerStep1 = TextureLoader.loadTexture(new File("res/player_step1.png"));
+		playerStep2 = TextureLoader.loadTexture(new File("res/player_step2.png"));
+		
+		playerJump = TextureLoader.loadTexture(new File("res/player_jump.png"));
 		
 		level = new World();		
 
-		level.camera.size.x = FTec.window.getWidth() / 4;
-		level.camera.size.y = FTec.window.getHeight() / 4;
+		level.camera.size.x = 160;
+		level.camera.size.y = 90;
 
 		level.addEntity(new EntityPlayer(), 16, 16);
 
-		level.addEntity(new EntityWall(320, 48), 0, 134);
+		level.addEntity(new EntityWall(320, 48), 0, 80);
 		
 	}
 
@@ -45,7 +52,10 @@ public class Razura extends Game{
 	@Override
 	public void destroy() {
 		level.dispose();
-		player.dispose();
+		playerStill.dispose();
+		playerStep1.dispose();
+		playerStep2.dispose();
+		playerJump.dispose();
 	}
 	
 }

@@ -3,6 +3,8 @@ package net.apryx.razura.game;
 import net.apryx.ftec.level.Entity;
 import net.apryx.graphics.SpriteBatch;
 import net.apryx.graphics.sprite.Animation;
+import net.apryx.graphics.sprite.AnimationController;
+import net.apryx.graphics.sprite.AnimationState;
 import net.apryx.graphics.sprite.Sprite;
 import net.apryx.input.Input;
 import net.apryx.input.Keys;
@@ -20,6 +22,8 @@ public class EntityPlayer extends Entity{
 	private static float airAcceleration = 0.5f * 60 * 60; 		//pixels per second^2
 	private static float airFriction = 0.25f * 60 * 60; 		//pixels per second^2
 	
+	private AnimationController controller;
+	
 	private Animation stepAnimation;
 	private Sprite jump;
 	
@@ -30,12 +34,25 @@ public class EntityPlayer extends Entity{
 		sprite = new Sprite(Razura.playerStill);
 		sprite.center();
 		
+		Sprite step1 = new Sprite(Razura.playerStep1).center();
+		Sprite step2 = new Sprite(Razura.playerStep2).center();
+		
 		stepAnimation = new Animation();
-		stepAnimation.addSprite(new Sprite(Razura.playerStep1).center());
-		stepAnimation.addSprite(new Sprite(Razura.playerStep2).center());
+		stepAnimation.addSprite(step1);
+		stepAnimation.addSprite(step2);
 		
 		jump = new Sprite(Razura.playerJump);
 		jump.center();
+		
+		//Animation controller stuff
+		//TODO transition stuffs
+		controller = new AnimationController();
+
+		AnimationState idle = new AnimationState(new Animation(sprite));
+		AnimationState step = new AnimationState(stepAnimation);
+		
+		controller.setState(idle);
+		
 	}
 	
 	@Override
@@ -58,7 +75,7 @@ public class EntityPlayer extends Entity{
 			xScale = 1;
 			addDirection += 1;
 		}
-		if(Input.isKeyPressed(Keys.SPACE) && grounded){
+		if(Input.isKeyDown(Keys.SPACE) && grounded){
 			vspeed = -jumpSpeed;
 		}
 		
@@ -68,11 +85,14 @@ public class EntityPlayer extends Entity{
 		applyMotion(Layer.SOLID);
 		
 		//TODO make animation states out of this
-		if(hspeed != 0){
+		/*if(hspeed != 0){
 			stepAnimation.update();
 		}else{
 			stepAnimation.reset();
-		}
+		}*/
+		
+		//Animation controller stuff
+		controller.update();
 	}
 
 	public float getLeft(){
@@ -89,7 +109,8 @@ public class EntityPlayer extends Entity{
 		super.render(batch);
 		
 		//TODO make animation states out of this
-		if(grounded){
+		batch.drawSprite(controller.getCurrentSprite(), x, y, xScale, yScale);
+		/*if(grounded){
 			if(hspeed == 0)
 				batch.drawSprite(sprite, x, y, xScale, yScale);
 			else{
@@ -101,7 +122,7 @@ public class EntityPlayer extends Entity{
 			}else{
 				batch.drawSprite(jump, x, y, xScale, yScale);	
 			}
-		}
+		}*/
 		
 	}
 	

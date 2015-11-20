@@ -2,10 +2,10 @@ package net.apryx.graphics.sprite;
 
 public class AnimationTransition {
 	
-	private AnimationCondition condition;
+	private AnimationCondition<?> condition;
 	private AnimationState target;
 	
-	public AnimationTransition(AnimationState target, AnimationCondition condition){
+	public AnimationTransition(AnimationState target, AnimationCondition<?> condition){
 		this.setTarget(target);
 		this.condition = condition;
 	}

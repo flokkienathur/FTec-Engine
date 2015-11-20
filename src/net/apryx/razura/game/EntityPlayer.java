@@ -3,6 +3,7 @@ package net.apryx.razura.game;
 import net.apryx.ftec.level.Entity;
 import net.apryx.graphics.SpriteBatch;
 import net.apryx.graphics.sprite.Animation;
+import net.apryx.graphics.sprite.AnimationCondition;
 import net.apryx.graphics.sprite.AnimationController;
 import net.apryx.graphics.sprite.AnimationState;
 import net.apryx.graphics.sprite.Sprite;
@@ -50,6 +51,10 @@ public class EntityPlayer extends Entity{
 
 		AnimationState idle = new AnimationState(new Animation(sprite));
 		AnimationState step = new AnimationState(stepAnimation);
+		
+		AnimationCondition<Integer> condition = new AnimationCondition<Integer>("pizza", 12, AnimationCondition.LESS);
+		controller.setValue("pizza", 11);
+		System.out.println(condition.check(controller, null));
 		
 		controller.setState(idle);
 		

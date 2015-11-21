@@ -21,7 +21,7 @@ public class FTec {
 	public static void create(Game game){
 		 window = new Window(1280,720, false);
 		 
-		 window.setVSync(true);
+		 window.setVSync(false);
 		 window.setVisible(true);
 		 
 		 window.setCursorHidden(false);
@@ -40,7 +40,7 @@ public class FTec {
 		 long sum = 0;
 		 int fps = 0;
 		 
-		 Time.deltaTime = 1f / 60f;
+		 Time.deltaTime = 0f;
 		 
 		 while(!game.isCloseRequested()){
 			 window.pollEvents();
@@ -52,7 +52,8 @@ public class FTec {
 			 deltaTime = delta / 1000000000f;
 			 runTime += deltaTime;
 			 
-			 Time.deltaTime = (Time.deltaTime * 99 + deltaTime) / 100f;
+			 //Time.deltaTime = (Time.deltaTime * 99 + deltaTime) / 100f;
+			 Time.deltaTime = deltaTime;
 			 Time.runTime = runTime;
 			 
 			 sum += delta;
@@ -70,6 +71,7 @@ public class FTec {
 			 fps++;
 			 
 			 window.swap();
+			 //window.sleep(2);
 		 }
 		 
 		 game.destroy();

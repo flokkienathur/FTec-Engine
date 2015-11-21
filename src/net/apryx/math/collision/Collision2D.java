@@ -6,6 +6,8 @@ import net.apryx.ftec.level.World;
 public class Collision2D {
 	
 	private World world;
+	
+	private float movementThreshold = 0.01f;
 
 	private Entity[] entitiesX;
 	private int entityIndexX;
@@ -86,6 +88,7 @@ public class Collision2D {
 		//for each y collider
 		for(int i = 0; i < getEntityYCount(); i++){
 			Entity current = getEntityY(i);
+			
 			yMotion = CollisionHelper.motionDistance1D(yMotion, entity.getTop(), entity.getBottom(), current.getTop(), current.getBottom());
 		}
 		
@@ -95,8 +98,7 @@ public class Collision2D {
 	public boolean move(Entity entity, float xMotion, float yMotion, int layer){
 		moveX(entity, xMotion, layer);
 		moveY(entity, yMotion, layer);
-		
-		return false;
+		return true;
 	}
 
 	public boolean collidedX(){

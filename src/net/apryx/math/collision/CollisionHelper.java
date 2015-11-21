@@ -23,9 +23,8 @@ public final class CollisionHelper {
 	 */
 	public static boolean overlapsAABB(float l1, float r1, float t1, float b1,
 			float l2, float r2, float t2, float b2) {
-		if (l1 >= r2 || l2 >= r1 ||
-
-		t1 >= b2 || t2 >= b1)
+		if (Mathf.greaterOrEqual(l1, r2) || Mathf.greaterOrEqual(l2, r1) ||
+				Mathf.greaterOrEqual(t1, b2) || Mathf.greaterOrEqual(t2, b1))
 			return false;
 
 		return true;
@@ -40,7 +39,7 @@ public final class CollisionHelper {
 	 * @return Whether there is an overlap
 	 */
 	public static boolean overlapsAABB(float l1, float r1, float l2, float r2) {
-		if (l1 >= r2 || l2 >= r1)
+		if (Mathf.greaterOrEqual(l1, r2) || Mathf.greaterOrEqual(l2, r1))
 			return false;
 
 		return true;
@@ -74,21 +73,21 @@ public final class CollisionHelper {
 			return 0;
 		
 		//TODO find fix for threshhold
-		final float THRESHOLD = 0.0001f;
+		//final float THRESHOLD = 0.001f;
 		//final float THRESHOLD = 0.0f;
 		
 		if(speed > 0){
 			if(!overlapsAABB(aStart, aEnd + speed, bStart, bEnd))
 				return speed;
 			
-			return speed - (aEnd + speed - bStart) - THRESHOLD;
+			return speed - (aEnd + speed - bStart);// - THRESHOLD;
 		}
 		
 		else{
 			if(!overlapsAABB(aStart + speed, aEnd, bStart, bEnd))
 				return speed;
 			
-			return speed + (bEnd - (aStart + speed)) + THRESHOLD;
+			return speed + (bEnd - (aStart + speed));// + THRESHOLD;
 		}
 	}
 

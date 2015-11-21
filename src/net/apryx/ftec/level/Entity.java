@@ -17,6 +17,10 @@ public class Entity {
 	protected boolean grounded = false;
 	protected float xScale = 1, yScale = 1;
 	
+	//used for the move method
+	private float accumX = 0;
+	private float accumY = 0;
+	
 	public Entity(){
 		sprite = new Sprite(null, 32, 32);
 	}
@@ -75,17 +79,41 @@ public class Entity {
 	}
 	
 	public Collision2D applyMotion(int layer, boolean nullifyOnCollision){
+		accumX += hspeed * Time.deltaTime;
+		accumY += vspeed * Time.deltaTime;
+		
+		boolean move = false;
+		
+		float xM = 0;
+		if(Mathf.abs(accumX) > Mathf.EPSILON * 10f){
+			xM = accumX;
+			accumX = 0;
+			move = true;
+		}
+		float yM = 0;
+		if(Mathf.abs(accumY) > Mathf.EPSILON * 10f){
+			yM = accumY;
+			accumY = 0;
+			move = true;
+		}
+		
+		if(!move){
+			return null;
+		}
+		
 		if(layer == 0){
-			x += hspeed;
-			y += vspeed;
+			x += xM;
+			y += yM;
 			return null;
 		}else{
-			grounded = false;
 			Collision2D collision = new Collision2D(this.level);
-			collision.move(this, hspeed * Time.deltaTime, vspeed * Time.deltaTime, layer);
-			
-			if(collision.collidedBottom()){
-				grounded = true;
+			collision.move(this, xM, yM, layer);
+			if(yM != 0){
+				if(collision.collidedBottom()){
+					grounded = true;
+				}else{
+					grounded = false;
+				}
 			}
 			if(nullifyOnCollision){
 				if(collision.collidedY()){
@@ -95,6 +123,7 @@ public class Entity {
 					hspeed = 0;
 				}
 			}
+			
 			return collision;
 		}
 	}

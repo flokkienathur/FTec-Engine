@@ -3,9 +3,14 @@ package net.apryx.math;
 public class Mathf {
 	
 	public static final float PI = (float)Math.PI;
+	public static final float EPSILON = 0.001f; //magic numbers ftw
 	
 	public static float abs(float x) {
 		return (float) Math.abs(x);
+	}
+	
+	public static float floor(float x){
+		return (int)x;
 	}
 
 	public static float sign(float x) {
@@ -87,5 +92,16 @@ public class Mathf {
 	
 	public static float min(float a, float b){
 		return (float) Math.min(a, b);
+	}
+
+	public static boolean greaterOrEqual(float a, float b){
+		return a - b > -EPSILON;
+	}
+	public static boolean smallerOrEqual(float a, float b){
+		return a - b < EPSILON;
+	}
+	
+	public static boolean equal(float a, float b){
+		return abs(a - b) < EPSILON;
 	}
 }

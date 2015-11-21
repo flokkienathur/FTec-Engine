@@ -23,9 +23,14 @@ public class AnimationController {
 		AnimationState current = state;
 
 		current = state.update(this);
+		int t = 0;
 		while(current != state){
 			state = current;
 			current = state.update(this);
+			
+			t++;
+			if(t > 6)
+				break;
 		}
 	}
 	

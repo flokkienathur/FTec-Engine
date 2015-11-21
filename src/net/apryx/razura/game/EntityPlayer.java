@@ -10,7 +10,9 @@ import net.apryx.graphics.sprite.AnimationTransition;
 import net.apryx.graphics.sprite.Sprite;
 import net.apryx.input.Input;
 import net.apryx.input.Keys;
+import net.apryx.math.Mathf;
 import net.apryx.math.collision.Layer;
+import net.apryx.timing.Time;
 
 public class EntityPlayer extends Entity{
 	
@@ -62,7 +64,8 @@ public class EntityPlayer extends Entity{
 		AnimationState stepState = new AnimationState(stepAnimation);
 
 		//Animation Condition
-		AnimationCondition<Float> hspeedNotZero = new AnimationCondition<Float>("hspeed", 0f, AnimationCondition.NEQUAL);
+		AnimationCondition<Float> hspeedGreater = new AnimationCondition<Float>("hspeed", 20f, AnimationCondition.GREATER);
+		AnimationCondition<Float> hspeedLess = new AnimationCondition<Float>("hspeed", -20f, AnimationCondition.LESS);
 		AnimationCondition<Float> hspeedZero = new AnimationCondition<Float>("hspeed", 0f, AnimationCondition.EQUAL);
 		
 		AnimationCondition<Boolean> notGrounded = new AnimationCondition<Boolean>("grounded", false, AnimationCondition.EQUAL);
@@ -71,7 +74,8 @@ public class EntityPlayer extends Entity{
 		AnimationCondition<Float> vspeedGreater = new AnimationCondition<Float>("vspeed", 0f, AnimationCondition.GREATER);
 		
 		//Animation Transitions
-		AnimationTransition idleToStepTransition = new AnimationTransition(stepState).addCondition(hspeedNotZero).addCondition(grounded);
+		AnimationTransition idleToStepTransition = new AnimationTransition(stepState).addCondition(hspeedGreater).addCondition(grounded);
+		AnimationTransition idleToStepTransition2 = new AnimationTransition(stepState).addCondition(hspeedLess).addCondition(grounded);
 		
 		AnimationTransition stepToIdleTransition = new AnimationTransition(idleState).addCondition(hspeedZero);
 		AnimationTransition stepToIdleTransition2 = new AnimationTransition(idleState).addCondition(notGrounded);
@@ -83,6 +87,7 @@ public class EntityPlayer extends Entity{
 
 		//Add the animation transitions
 		idleState.addTransition(idleToStepTransition);
+		idleState.addTransition(idleToStepTransition2);
 		
 		stepState.addTransition(stepToIdleTransition);
 		stepState.addTransition(stepToIdleTransition2);
@@ -125,6 +130,7 @@ public class EntityPlayer extends Entity{
 		gravity(gravity);
 		friction(currentFriction);
 		accelerate(speed, addDirection, currentAcceleration);
+		
 		applyMotion(Layer.SOLID);
 
 		controller.setValue("hspeed", hspeed);
@@ -132,21 +138,20 @@ public class EntityPlayer extends Entity{
 		controller.setValue("grounded", grounded);
 		controller.update();
 	}
-
-	public float getLeft(){
-		return x - 2;
-	}
-
-	public float getRight(){
-		return x + 2;
-	}
-	
 	
 	@Override
 	public void render(SpriteBatch batch) {
 		super.render(batch);
 		
 		batch.drawSprite(controller.getCurrentSprite(), x, y, xScale, yScale);
+	}
+	
+	public float getLeft(){
+		return x - 2;
+	}
+
+	public float getRight(){
+		return x + 2;
 	}
 	
 }

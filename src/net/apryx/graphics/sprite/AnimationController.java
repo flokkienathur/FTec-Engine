@@ -2,12 +2,12 @@ package net.apryx.graphics.sprite;
 
 import java.util.HashMap;
 
-//TODO add variables for transitions
 //TODO add triggers for imidiate transitions (par examplar: jump can be an interuption)
 public class AnimationController {
 	
 	private AnimationState state;
 	private HashMap<String, Object> variables;
+	private HashMap<String, AnimationState> triggers;
 	
 	public AnimationController(){
 		this(null);
@@ -16,6 +16,7 @@ public class AnimationController {
 	public AnimationController(AnimationState defaultState){
 		this.state = defaultState;
 		variables = new HashMap<String, Object>();
+		triggers = new HashMap<String, AnimationState>();
 	}
 	
 	public void update(){
@@ -26,6 +27,16 @@ public class AnimationController {
 			state = current;
 			current = state.update(this);
 		}
+	}
+	
+	public AnimationController addTrigger(String trigger, AnimationState value){
+		triggers.put(trigger, value);
+		return this;
+	}
+	
+	public AnimationController trigger(String trigger){
+		this.state = triggers.get(trigger);
+		return this;
 	}
 	
 	public void setState(AnimationState state) {

@@ -19,7 +19,13 @@ public class AnimationController {
 	}
 	
 	public void update(){
-		state = state.update(this);
+		AnimationState current = state;
+
+		current = state.update(this);
+		while(current != state){
+			state = current;
+			current = state.update(this);
+		}
 	}
 	
 	public void setState(AnimationState state) {

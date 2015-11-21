@@ -57,10 +57,13 @@ public class Entity {
 		
 		currentSpeed -= friction * Time.deltaTime;
 		
-		if(currentSpeed < 0)
+		if(currentSpeed < 0){
 			currentSpeed = 0;
+			hspeed = 0;
+		}else{
+			hspeed = currentSpeed * dir;			
+		}
 		
-		hspeed = currentSpeed * dir;
 	}
 	
 	public void applyMotion(){

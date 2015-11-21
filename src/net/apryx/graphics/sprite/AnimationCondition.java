@@ -8,6 +8,7 @@ public class AnimationCondition<T extends Comparable<?>> {
 
 	public static final int LEQUAL = 2;
 	public static final int GEQUAL = 3;
+	public static final int NEQUAL = 4;
 	
 	private Comparable<T> value;
 	private String variableName;
@@ -47,6 +48,7 @@ public class AnimationCondition<T extends Comparable<?>> {
 	public boolean check(AnimationController controller, AnimationState currentState){
 		try{
 			T t = (T) controller.getValue(variableName);
+			
 			//negative because reverse check
 			int v = -value.compareTo(t);
 			
@@ -55,6 +57,8 @@ public class AnimationCondition<T extends Comparable<?>> {
 				return v <= 0;
 			case GEQUAL:
 				return v >= 0;
+			case NEQUAL:
+				return v != 0;
 			default:
 				return v == check;
 			}

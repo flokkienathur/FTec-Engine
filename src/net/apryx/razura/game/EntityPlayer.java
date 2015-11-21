@@ -6,6 +6,7 @@ import net.apryx.graphics.sprite.Animation;
 import net.apryx.graphics.sprite.AnimationCondition;
 import net.apryx.graphics.sprite.AnimationController;
 import net.apryx.graphics.sprite.AnimationState;
+import net.apryx.graphics.sprite.AnimationTransition;
 import net.apryx.graphics.sprite.Sprite;
 import net.apryx.input.Input;
 import net.apryx.input.Keys;
@@ -25,9 +26,6 @@ public class EntityPlayer extends Entity{
 	
 	private AnimationController controller;
 	
-	private Animation stepAnimation;
-	private Sprite jump;
-	
 	public EntityPlayer(){
 		layer = Layer.PLAYER;
 
@@ -38,31 +36,71 @@ public class EntityPlayer extends Entity{
 		Sprite step1 = new Sprite(Razura.playerStep1).center();
 		Sprite step2 = new Sprite(Razura.playerStep2).center();
 		
-		stepAnimation = new Animation();
+		Animation stepAnimation = new Animation();
 		stepAnimation.addSprite(step1);
 		stepAnimation.addSprite(step2);
 		
-		jump = new Sprite(Razura.playerJump);
+		Sprite jump = new Sprite(Razura.playerJump);
 		jump.center();
 		
 		//Animation controller stuff
 		//TODO transition stuffs
+		
+		//Create the controller
 		controller = new AnimationController();
+		
+		//Set its default values
+		controller.setValue("hspeed", 0);
+		controller.setValue("vspeed", 0);
+		controller.setValue("grounded", false);
 
-		AnimationState idle = new AnimationState(new Animation(sprite));
-		AnimationState step = new AnimationState(stepAnimation);
+		//Animation states
+		AnimationState idleState = new AnimationState(new Animation(sprite));
 		
-		AnimationCondition<Integer> condition = new AnimationCondition<Integer>("pizza", 12, AnimationCondition.LESS);
-		controller.setValue("pizza", 11);
-		System.out.println(condition.check(controller, null));
+		AnimationState jumpState = new AnimationState(new Animation(jump));
+		AnimationState fallState = new AnimationState(new Animation(sprite));
+		AnimationState stepState = new AnimationState(stepAnimation);
+
+		//Animation Condition
+		AnimationCondition<Float> hspeedNotZero = new AnimationCondition<Float>("hspeed", 0f, AnimationCondition.NEQUAL);
+		AnimationCondition<Float> hspeedZero = new AnimationCondition<Float>("hspeed", 0f, AnimationCondition.EQUAL);
 		
-		controller.setState(idle);
+		AnimationCondition<Boolean> notGrounded = new AnimationCondition<Boolean>("grounded", false, AnimationCondition.EQUAL);
+		AnimationCondition<Boolean> grounded = new AnimationCondition<Boolean>("grounded", true, AnimationCondition.EQUAL);
+
+		AnimationCondition<Float> vspeedGreater = new AnimationCondition<Float>("vspeed", 0f, AnimationCondition.GREATER);
+		
+		//Animation Transitions
+		AnimationTransition idleToStepTransition = new AnimationTransition(stepState).addCondition(hspeedNotZero).addCondition(grounded);
+		
+		AnimationTransition stepToIdleTransition = new AnimationTransition(idleState).addCondition(hspeedZero);
+		AnimationTransition stepToIdleTransition2 = new AnimationTransition(idleState).addCondition(notGrounded);
+		
+		AnimationTransition idleToJump = new AnimationTransition(jumpState).addCondition(notGrounded);
+		AnimationTransition jumpToFall = new AnimationTransition(fallState).addCondition(vspeedGreater);
+		
+		AnimationTransition airToIdle = new AnimationTransition(idleState).addCondition(grounded);
+
+		//Add the animation transitions
+		idleState.addTransition(idleToStepTransition);
+		
+		stepState.addTransition(stepToIdleTransition);
+		stepState.addTransition(stepToIdleTransition2);
+		
+		idleState.addTransition(idleToJump);
+		
+		jumpState.addTransition(jumpToFall);
+		jumpState.addTransition(airToIdle);
+		
+		fallState.addTransition(airToIdle);
+		
+		//Set the state to the default idle state
+		controller.setState(idleState);
 		
 	}
 	
 	@Override
 	public void update() {
-		
 		float currentFriction = groundFriction;
 		float currentAcceleration = groundAcceleration;
 		float addDirection = 0;
@@ -88,15 +126,10 @@ public class EntityPlayer extends Entity{
 		friction(currentFriction);
 		accelerate(speed, addDirection, currentAcceleration);
 		applyMotion(Layer.SOLID);
-		
-		//TODO make animation states out of this
-		/*if(hspeed != 0){
-			stepAnimation.update();
-		}else{
-			stepAnimation.reset();
-		}*/
-		
-		//Animation controller stuff
+
+		controller.setValue("hspeed", hspeed);
+		controller.setValue("vspeed", vspeed);
+		controller.setValue("grounded", grounded);
 		controller.update();
 	}
 
@@ -113,22 +146,7 @@ public class EntityPlayer extends Entity{
 	public void render(SpriteBatch batch) {
 		super.render(batch);
 		
-		//TODO make animation states out of this
 		batch.drawSprite(controller.getCurrentSprite(), x, y, xScale, yScale);
-		/*if(grounded){
-			if(hspeed == 0)
-				batch.drawSprite(sprite, x, y, xScale, yScale);
-			else{
-				batch.drawSprite(stepAnimation.getCurrentSprite(), x, y, xScale, yScale);
-			}
-		}else{
-			if(vspeed > 0){
-				batch.drawSprite(sprite, x, y, xScale, yScale);				
-			}else{
-				batch.drawSprite(jump, x, y, xScale, yScale);	
-			}
-		}*/
-		
 	}
 	
 }

@@ -182,6 +182,17 @@ public class Matrix4 {
 		}
 	}
 	
+	public void setOrthagonal(float left, float right, float bottom, float top, float near, float far){
+		data[0 * 4 + 0] = 2f / (right - left);
+		data[0 * 4 + 3] = -(right + left)/(right - left);
+
+		data[1 * 4 + 1] = 2f / (top - bottom);
+		data[1 * 4 + 3] = -(top + bottom)/(top - bottom);
+		
+		data[2 * 4 + 2] = (-2f) / (far - near);
+		data[2 * 4 + 3] = -(far + near) / (far - near);
+	}
+	
 	public static Matrix4 getOrthagonalMatrix(float left, float right, float bottom, float top, float near, float far){
 		return new Matrix4(new float[]{
 				2f / (right - left), 0, 0, -(right + left)/(right - left),
@@ -189,6 +200,28 @@ public class Matrix4 {
 				0,0, (-2f) / (far - near), -(far + near) / (far - near),
 				0,0,0,1
 		});
+	}
+	
+	public void setProjection(float fov, float asp, float n,
+            float f){
+
+        float uh = 1f / Mathf.tan(Mathf.toRadians(fov / 2));
+        float uw = uh;
+        
+        data[0 * 4 + 0] = uh/asp;
+        data[1 * 4 + 1] = uw;
+        data[2 * 4 + 2] = (n+f)/(n-f);
+        data[2 * 4 + 3] = (2*n*f)/(n-f);
+        data[3 * 4 + 2] = -1;
+        data[3 * 4 + 3] = 0;
+        
+        /*new float[]{
+        		uh/asp, 0, 0, 0,
+                0, uw, 0, 0,
+                0, 0, (n+f)/(n-f), (2*n*f)/(n-f),
+                0, 0, -1, 0
+                 
+        }*/
 	}
 	
 	public static Matrix4 getProjectionMatrix(float fov, float asp, float n,

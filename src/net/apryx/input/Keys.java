@@ -132,5 +132,5 @@ public static final int
 	RIGHT_ALT     = 0x15A,
 	RIGHT_SUPER   = 0x15B,
 	MENU          = 0x15C,
-	LAST          = MENU;
+	LAST          = MENU + 1;
 }

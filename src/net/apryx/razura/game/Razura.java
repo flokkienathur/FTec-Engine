@@ -15,21 +15,27 @@ public class Razura extends Game{
 	public static Texture playerStill;
 	public static Texture playerStep1;
 	public static Texture playerStep2;
+	public static Texture playerFall;
 	public static Texture playerJump;
+	public static Texture playerJump2;
+	public static Texture playerCrouch;
 	
 	@Override
 	public void init() {
 		GL.clearColor(0,0,0,1);
 		playerStill = TextureLoader.loadTexture(new File("res/player_still.png"));
+		playerFall = TextureLoader.loadTexture(new File("res/player_fall.png"));
 		playerStep1 = TextureLoader.loadTexture(new File("res/player_step1.png"));
 		playerStep2 = TextureLoader.loadTexture(new File("res/player_step2.png"));
-		
+
 		playerJump = TextureLoader.loadTexture(new File("res/player_jump.png"));
+		playerJump2 = TextureLoader.loadTexture(new File("res/player_jump2.png"));
+		playerCrouch = TextureLoader.loadTexture(new File("res/player_crouch.png"));
 		
 		level = new World();		
 
-		level.camera.size.x = 160;
-		level.camera.size.y = 90;
+		level.camera.size.x = 1280 / 4f;
+		level.camera.size.y = 720 / 4f;
 
 		level.addEntity(new EntityWall(320, 48), 0, 80);
 		level.addEntity(new EntityWall(16, 16), 100, 80 - 16);
@@ -59,6 +65,9 @@ public class Razura extends Game{
 		playerStep1.dispose();
 		playerStep2.dispose();
 		playerJump.dispose();
+		playerFall.dispose();
+		playerJump2.dispose();
+		playerCrouch.dispose();
 	}
 	
 }

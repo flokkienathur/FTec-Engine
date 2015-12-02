@@ -1,10 +1,10 @@
 package net.apryx.ftec.engine;
 
-import org.lwjgl.opengl.GL11;
-
 import net.apryx.graphics.Window;
 import net.apryx.graphics.opengl.GL;
 import net.apryx.timing.Time;
+
+import org.lwjgl.opengl.GL11;
 
 public class FTec {
 	
@@ -19,7 +19,7 @@ public class FTec {
 	}
 
 	public static void create(Game game){
-		 window = new Window(1280,720, false);
+		 window = new Window(1024,768, false);
 		 
 		 window.setVSync(true);
 		 window.setVisible(true);
@@ -33,6 +33,8 @@ public class FTec {
 		 
 		 GL11.glEnable(GL11.GL_BLEND); 
 		 GL11.glBlendFunc (GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		 GL11.glEnable(GL11.GL_ALPHA_TEST);
+		 GL11.glAlphaFunc(GL11.GL_GREATER, 0.5f);
 		 
 		 game.init();
 		 
@@ -71,6 +73,7 @@ public class FTec {
 			 fps++;
 			 
 			 window.swap();
+			 //window.sleep(4);
 		 }
 		 
 		 game.destroy();

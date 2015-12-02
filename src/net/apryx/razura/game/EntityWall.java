@@ -19,7 +19,7 @@ public class EntityWall extends Entity{
 		
 		batch.setTexture(null);
 		
-		batch.color(1, 1, 1);
+		batch.color(0.1f, 0.1f, 0.1f);
 		
 		batch.vertex(getLeft(), getTop());
 		batch.vertex(getRight(), getBottom());

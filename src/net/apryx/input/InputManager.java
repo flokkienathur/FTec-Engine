@@ -2,14 +2,17 @@ package net.apryx.input;
 
 import java.util.ArrayList;
 
-import net.apryx.logger.Log;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
+import net.java.games.input.Keyboard;
 import net.java.games.input.Mouse;
 
 public class InputManager {
-	
+
 	private ArrayList<Mouse> mice;
+	private ArrayList<Keyboard> keyboards;
+	private ArrayList<Controller> controllers;
+	
 	private float[] x;
 	private float[] y;
 	
@@ -18,13 +21,18 @@ public class InputManager {
 	
 	public InputManager(){
 		mice = new ArrayList<Mouse>();
+		keyboards = new ArrayList<Keyboard>();
+		controllers = new ArrayList<Controller>();
 		
 		ControllerEnvironment ec = ControllerEnvironment.getDefaultEnvironment();
 		
 		for(Controller c : ec.getControllers()){
 			if(c.getType() == Controller.Type.MOUSE){
-				Log.println("Found mice: " + c.getName());
 				mice.add((Mouse)c);
+			}else if(c.getType() == Controller.Type.KEYBOARD){
+				keyboards.add((Keyboard)c);
+			}else{
+				controllers.add(c);
 			}
 		}
 		
@@ -46,6 +54,12 @@ public class InputManager {
 			left[i] = mice.get(i).getLeft().getPollData() > 0.5f;
 			right[i] = mice.get(i).getRight().getPollData() > 0.5f;
 		}
+		for(int i = 0; i < keyboards.size(); i++){
+			keyboards.get(i).poll();
+		}
+		for(int i = 0; i < controllers.size(); i++){
+			controllers.get(i).poll();
+		}
 	}
 	
 	public float getMouseX(int mouse){
@@ -62,6 +76,18 @@ public class InputManager {
 	
 	public boolean getRightMouseButtonDown(int index){
 		return right[index];
+	}
+	
+	public ArrayList<Mouse> getMice() {
+		return mice;
+	}
+	
+	public ArrayList<Keyboard> getKeyboards() {
+		return keyboards;
+	}
+	
+	public ArrayList<Controller> getControllers() {
+		return controllers;
 	}
 	
 }

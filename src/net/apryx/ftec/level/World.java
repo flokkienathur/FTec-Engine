@@ -10,17 +10,17 @@ import net.apryx.graphics.camera.OrthagonalCamera;
 
 public class World {
 	
-	private ArrayList<Entity> entities;
+	protected ArrayList<Entity> entities;
 	
 	public Camera camera;
 	
-	private SpriteBatch batch;
+	protected SpriteBatch batch;
 	
 	public World(){
 		entities = new ArrayList<Entity>();
 		camera = new OrthagonalCamera(FTec.window.getWidth(), FTec.window.getHeight());
 		
-		batch = new SpriteBatch(1024);
+		batch = new SpriteBatch(1800*3);
 		
 		batch.setCamera(camera);
 	}
@@ -57,6 +57,16 @@ public class World {
 	
 	public void removeEntity(Entity entity){
 		entities.remove(entity);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T extends Entity> T getEntity(Class<T> ec){
+		
+		for(Entity e : entities)
+			if(e.getClass() == ec)
+				return (T) e;
+		
+		return null;
 	}
 	
 	public Entity getEntityByIndex(int index){

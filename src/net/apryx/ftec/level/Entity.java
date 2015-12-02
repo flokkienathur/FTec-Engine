@@ -8,7 +8,7 @@ import net.apryx.timing.Time;
 
 public class Entity {
 	
-	protected World level;
+	protected World world;
 	
 	protected int layer;
 	protected Sprite sprite;
@@ -106,7 +106,7 @@ public class Entity {
 			y += yM;
 			return null;
 		}else{
-			Collision2D collision = new Collision2D(this.level);
+			Collision2D collision = new Collision2D(this.world);
 			collision.move(this, xM, yM, layer);
 			if(yM != 0){
 				if(collision.collidedBottom()){
@@ -129,11 +129,11 @@ public class Entity {
 	}
 	
 	public void setLevel(World level) {
-		this.level = level;
+		this.world = level;
 	}
 	
 	public World getLevel() {
-		return level;
+		return world;
 	}
 	
 	public float getLeft(){

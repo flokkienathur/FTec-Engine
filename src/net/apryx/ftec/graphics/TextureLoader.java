@@ -47,6 +47,7 @@ public class TextureLoader {
 			
 			return texture;
 		}catch(Exception e){
+			System.err.println("Error reading : " + file.getAbsolutePath());
 			e.printStackTrace();
 			return null;
 		}

@@ -184,7 +184,7 @@ public class SpriteBatch extends Batch{
 			defaultTexture.bind();
 		
 		drawCalls++;
-		
+
 		vao.drawArrays(GL.TRIANGLES, 0, length);
 		
 		if(surface != null)

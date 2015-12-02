@@ -10,7 +10,9 @@ import net.apryx.graphics.sprite.AnimationTransition;
 import net.apryx.graphics.sprite.Sprite;
 import net.apryx.input.Input;
 import net.apryx.input.Keys;
+import net.apryx.math.Mathf;
 import net.apryx.math.collision.Layer;
+import net.apryx.timing.Time;
 
 public class EntityPlayer extends Entity{
 	
@@ -24,7 +26,13 @@ public class EntityPlayer extends Entity{
 	private static float airAcceleration = 0.5f * 60 * 60; 		//pixels per second^2
 	private static float airFriction = 0.25f * 60 * 60; 		//pixels per second^2
 	
+	private static int maxJumps = 0;
+	
 	private AnimationController controller;
+	private float airTime;
+	private int jumped = maxJumps;
+	
+	protected boolean crouching = false;
 	
 	public EntityPlayer(){
 		layer = Layer.PLAYER;
@@ -34,6 +42,9 @@ public class EntityPlayer extends Entity{
 		
 		Sprite step1 = new Sprite(Razura.playerStep1).center();
 		Sprite step2 = new Sprite(Razura.playerStep2).center();
+
+		Sprite fall = new Sprite(Razura.playerFall).center();
+		Sprite crouch = new Sprite(Razura.playerCrouch).center();
 		
 		Animation stepAnimation = new Animation();
 		stepAnimation.addSprite(step1);
@@ -51,12 +62,14 @@ public class EntityPlayer extends Entity{
 		controller.setValue("hspeed", 0);
 		controller.setValue("vspeed", 0);
 		controller.setValue("grounded", false);
+		controller.setValue("crouching", false);
 
 		//Animation states
 		AnimationState idleState = new AnimationState(new Animation(sprite));
 		
 		AnimationState jumpState = new AnimationState(new Animation(jump));
-		AnimationState fallState = new AnimationState(new Animation(sprite));
+		AnimationState fallState = new AnimationState(new Animation(fall));
+		AnimationState crouchState = new AnimationState(new Animation(crouch));
 		AnimationState stepState = new AnimationState(stepAnimation);
 
 		//Animation Condition
@@ -68,6 +81,9 @@ public class EntityPlayer extends Entity{
 		AnimationCondition<Boolean> grounded = new AnimationCondition<Boolean>("grounded", true, AnimationCondition.EQUAL);
 
 		AnimationCondition<Float> vspeedGreater = new AnimationCondition<Float>("vspeed", 0f, AnimationCondition.GREATER);
+
+		AnimationCondition<Boolean> crouchingCondition = new AnimationCondition<Boolean>("crouching", true, AnimationCondition.EQUAL);
+		AnimationCondition<Boolean> notCrouchingCondition = new AnimationCondition<Boolean>("crouching", false, AnimationCondition.EQUAL);
 		
 		//Animation Transitions
 		AnimationTransition idleToStepTransition = new AnimationTransition(stepState).addCondition(hspeedGreater).addCondition(grounded);
@@ -78,7 +94,10 @@ public class EntityPlayer extends Entity{
 		
 		AnimationTransition idleToJump = new AnimationTransition(jumpState).addCondition(notGrounded);
 		AnimationTransition jumpToFall = new AnimationTransition(fallState).addCondition(vspeedGreater);
-		
+
+		AnimationTransition idleToCrouch = new AnimationTransition(crouchState).addCondition(crouchingCondition);
+		AnimationTransition crouchToIdle = new AnimationTransition(idleState).addCondition(notCrouchingCondition);
+				
 		AnimationTransition airToIdle = new AnimationTransition(idleState).addCondition(grounded);
 
 		//Add the animation transitions
@@ -93,6 +112,9 @@ public class EntityPlayer extends Entity{
 		jumpState.addTransition(jumpToFall);
 		jumpState.addTransition(airToIdle);
 		
+		crouchState.addTransition(crouchToIdle);
+		idleState.addTransition(idleToCrouch);
+		
 		fallState.addTransition(airToIdle);
 		
 		//Set the state to the default idle state
@@ -104,13 +126,24 @@ public class EntityPlayer extends Entity{
 	public void update() {
 		float currentFriction = groundFriction;
 		float currentAcceleration = groundAcceleration;
+		float currentGravity = gravity;
 		float addDirection = 0;
 		
 		if(!grounded){
 			currentFriction = airFriction;
 			currentAcceleration = airAcceleration;
+			airTime += Time.deltaTime;
+		}else{
+			airTime = 0;
+			jumped = maxJumps;
 		}
-
+		
+		if(Input.isKeyDown(Keys.DOWN) && grounded && Mathf.abs(hspeed) < 20f){
+			crouching = true;
+		}else{
+			crouching = false;
+		}
+		
 		if(Input.isKeyDown(Keys.LEFT)){
 			xScale = -1;
 			addDirection -= 1;
@@ -119,11 +152,15 @@ public class EntityPlayer extends Entity{
 			xScale = 1;
 			addDirection += 1;
 		}
-		if(Input.isKeyDown(Keys.SPACE) && grounded){
+		if(Input.isKeyPressed(Keys.SPACE) && (grounded || (airTime < 0.1f || jumped > 0))){
 			vspeed = -jumpSpeed;
+			jumped -= 1;
+		}
+		if(Input.isKeyDown(Keys.SPACE)){
+			currentGravity /= 1.8f;
 		}
 		
-		gravity(gravity);
+		gravity(currentGravity);
 		friction(currentFriction);
 		accelerate(speed, addDirection, currentAcceleration);
 		
@@ -132,13 +169,22 @@ public class EntityPlayer extends Entity{
 		controller.setValue("hspeed", hspeed);
 		controller.setValue("vspeed", vspeed);
 		controller.setValue("grounded", grounded);
+		controller.setValue("crouching", crouching);
 		controller.update();
+		
+		if(airTime > minAirTime){
+			minAirTime = airTime;
+			System.out.println(minAirTime);
+		}
 	}
+	
+	float minAirTime = 0;
 	
 	@Override
 	public void render(SpriteBatch batch) {
 		super.render(batch);
 		
+		batch.color(1,1,1);
 		batch.drawSprite(controller.getCurrentSprite(), x, y, xScale, yScale);
 	}
 	

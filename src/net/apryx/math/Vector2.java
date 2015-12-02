@@ -102,6 +102,10 @@ public class Vector2 {
 	public Vector3 toVector3(){
 		return new Vector3(x,y,0);
 	}
+	
+	public Vector2 normalize(){
+		return this.div(this.length());
+	}
 
 	//STATIC METHODS
 	

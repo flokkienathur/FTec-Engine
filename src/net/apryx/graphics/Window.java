@@ -207,7 +207,7 @@ public final class Window {
 		mouseDX = 0;
 		mouseDY = 0;
 		
-		input.poll();
+		//input.poll();
 		
 		glfwPollEvents();
 	}
@@ -286,8 +286,8 @@ public final class Window {
 
 		@Override
 		public void invoke(long windowHandle, double x, double y) {
-			mouseDX = (float) (x - mouseX);
-			mouseDY = (float) (y - mouseY);
+			mouseDX += (float) (x - mouseX);
+			mouseDY += (float) (y - mouseY);
 			
 			mouseX = (float) x;
 			mouseY = (float) y;

@@ -6,8 +6,6 @@ import net.apryx.ftec.level.World;
 public class Collision2D {
 	
 	private World world;
-	
-	private float movementThreshold = 0.01f;
 
 	private Entity[] entitiesX;
 	private int entityIndexX;

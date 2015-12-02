@@ -21,7 +21,7 @@ public class FTec {
 	public static void create(Game game){
 		 window = new Window(1280,720, false);
 		 
-		 window.setVSync(false);
+		 window.setVSync(true);
 		 window.setVisible(true);
 		 
 		 window.setCursorHidden(false);
@@ -71,7 +71,6 @@ public class FTec {
 			 fps++;
 			 
 			 window.swap();
-			 //window.sleep(2);
 		 }
 		 
 		 game.destroy();

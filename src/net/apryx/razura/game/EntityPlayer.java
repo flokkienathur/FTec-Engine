@@ -10,9 +10,7 @@ import net.apryx.graphics.sprite.AnimationTransition;
 import net.apryx.graphics.sprite.Sprite;
 import net.apryx.input.Input;
 import net.apryx.input.Keys;
-import net.apryx.math.Mathf;
 import net.apryx.math.collision.Layer;
-import net.apryx.timing.Time;
 
 public class EntityPlayer extends Entity{
 	
@@ -31,7 +29,6 @@ public class EntityPlayer extends Entity{
 	public EntityPlayer(){
 		layer = Layer.PLAYER;
 
-		//TODO make animation states out of this
 		sprite = new Sprite(Razura.playerStill);
 		sprite.center();
 		
@@ -46,7 +43,6 @@ public class EntityPlayer extends Entity{
 		jump.center();
 		
 		//Animation controller stuff
-		//TODO transition stuffs
 		
 		//Create the controller
 		controller = new AnimationController();

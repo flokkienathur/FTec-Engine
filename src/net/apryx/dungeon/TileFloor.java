@@ -29,7 +29,7 @@ public class TileFloor extends Tile{
 		batch.uv(texture.getTexCoordX(), texture.getTexCoordY2());
 		batch.vertex( x,z, y+TILE_SIZE);
 		
-		z += 1;
+		z += 2;
 		
 		batch.uv(texture.getTexCoordX(), texture.getTexCoordY());
 		batch.vertex( x,z, y);

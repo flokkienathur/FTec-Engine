@@ -5,12 +5,15 @@ import net.apryx.input.Input;
 import net.apryx.input.Keys;
 import net.apryx.math.Mathf;
 import net.apryx.math.Vector2;
+import net.apryx.math.Vector3;
 import net.apryx.timing.Time;
 
 public class EntityPlayer extends Entity{
 	
+	public Vector3 front;
+	
 	public EntityPlayer(){
-		
+		front = new Vector3();
 	}
 	
 	public void update(){
@@ -38,16 +41,21 @@ public class EntityPlayer extends Entity{
 		if(Input.isKeyDown(Keys.D))
 			motion.x += 1;
 		
+		float s = Mathf.sin(world.camera.rotation.y);
+		float c = Mathf.cos(world.camera.rotation.y);
+		
+		//set the front and shit
+		front.x = -s;
+		front.z =  c;
+		
 		if(motion.sqrLength() > 0){
 			motion.normalize();
-
-			float s = Mathf.sin(world.camera.rotation.y);
-			float c = Mathf.cos(world.camera.rotation.y);
 			
 			float a = 2;
 			
 			x += (motion.x * c + motion.y * -s) * a * Time.deltaTime;
 			y += (motion.x * s + motion.y  * c) * a * Time.deltaTime;
+
 		}
 		
 		world.camera.position.x = x;

@@ -11,7 +11,7 @@ public class EntityThing extends Entity{
 	
 	private Texture texture;
 	private boolean bb = false;
-	EntityPlayer player;
+	private EntityPlayer player;
 	
 	public EntityThing(Texture texture){
 		this.texture = texture;
@@ -32,42 +32,39 @@ public class EntityThing extends Entity{
 		bb = Input.isKeyPressed(Keys.SPACE) ? !bb : bb;
 
 		if(bb && (texture == HeavenDungeon.fire || texture == HeavenDungeon.rock)){
-			batch.uv(1, 1);
-			batch.vertex( x-size,0, y);
-			batch.uv(0, 1);
-			batch.vertex( x+size,0, y);
-			batch.uv(0, 0);
-			batch.vertex( x+size,2*size, y);
-	
-			batch.uv(1, 1);
-			batch.vertex( x-size,0, y);
-			batch.uv(0, 0);
-			batch.vertex( x+size,2*size, y);
-			batch.uv(1, 0);
-			batch.vertex( x-size,2*size, y);
-			
-	
-			batch.uv(1, 1);
-			batch.vertex( x,0, y-size);
-			batch.uv(0, 1);
-			batch.vertex( x,0, y+size);
-			batch.uv(0, 0);
-			batch.vertex( x,2*size, y+size);
-	
-			batch.uv(1, 1);
-			batch.vertex( x,0, y-size);
-			batch.uv(0, 0);
-			batch.vertex( x,2*size, y+size);
-			batch.uv(1, 0);
-			batch.vertex( x,2*size, y-size);
-		}else{
-
 			float dx = x - player.x;
 			float dy = y - player.y;
 			float length = Mathf.sqrt(dx * dx + dy * dy);
-			
 			dx /= length / size;
 			dy /= length / size;
+			
+			//float dx = player.front.x * size;
+			//float dy = player.front.z * size;
+			
+			batch.uv(1, 1);
+			batch.vertex( x+dy,0, y-dx);
+			batch.uv(0, 1);
+			batch.vertex( x-dy,0, y+dx);
+			batch.uv(0, 0);
+			batch.vertex( x-dy,2*size, y+dx);
+			
+
+			batch.uv(1, 1);
+			batch.vertex( x+dy,0, y-dx);
+			batch.uv(0, 0);
+			batch.vertex( x-dy,2*size, y+dx);
+			batch.uv(1, 0);
+			batch.vertex( x+dy,2*size, y-dx);
+		}else{
+
+			//float dx = x - player.x;
+			//float dy = y - player.y;
+			//float length = Mathf.sqrt(dx * dx + dy * dy);
+			//dx /= length / size;
+			//dy /= length / size;
+			
+			float dx = player.front.x * size;
+			float dy = player.front.z * size;
 			
 			batch.uv(1, 1);
 			batch.vertex( x+dy,0, y-dx);

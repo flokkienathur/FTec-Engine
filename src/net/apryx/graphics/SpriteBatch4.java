@@ -11,32 +11,23 @@ import net.apryx.graphics.camera.OrthagonalCamera;
 import net.apryx.graphics.opengl.GL;
 import net.apryx.graphics.opengl.ShaderProgram;
 import net.apryx.graphics.opengl.Texture;
-import net.apryx.graphics.opengl.VAO;
 import net.apryx.graphics.opengl.VBO;
 import net.apryx.graphics.sprite.Sprite;
 import net.apryx.math.Mathf;
 import net.apryx.math.Matrix4;
 import net.apryx.utils.BufferUtils;
 
-public class SpriteBatch {
-
-	private static final int SIZEOF_FLOAT = 4;
-	
-	private static final int SIZEOF_VERTEX = SIZEOF_FLOAT * 3;
-	private static final int SIZEOF_COLOR = SIZEOF_FLOAT * 4;
-	private static final int SIZEOF_UV = SIZEOF_FLOAT * 2;
-	private static final int SIZEOF_NORMAL = SIZEOF_FLOAT * 3;
-
-	private static final int SIZEOF_VERTEX_DATA = SIZEOF_VERTEX + SIZEOF_COLOR + SIZEOF_UV + SIZEOF_NORMAL;
+@Deprecated
+public class SpriteBatch4 extends Batch{
 	
 	private ShaderProgram defaultShader;
 	private Texture defaultTexture;
 	private Camera defaultCamera;
-	
+
 	private FloatBuffer vertexBuffer;
-	
-	private VBO vbo;
-	private VAO vao;
+	private FloatBuffer colorBuffer;
+	private FloatBuffer uvBuffer;
+	private FloatBuffer normalBuffer;
 	
 	private boolean drawing = false;
 	private int idx = 0;
@@ -54,40 +45,39 @@ public class SpriteBatch {
 	
 	private int drawMode = VBO.DYNAMIC_DRAW;
 	
-	private float rest[] = {1,1,1,1, 0,0, 0,0,1};
+	private float[] normal = {0,0,1};
+	private float[] color = {1,1,1,1};
+	private float[] uv = {0,0};
 	
-	public SpriteBatch(int vertexCount){
+	public SpriteBatch4(int vertexCount){
 		super();
 		
 		limit = vertexCount;
-		
-		vbo = new VBO(VBO.ARRAY_BUFFER);
-		vao = new VAO();
 
-		//amount of floats
-		vertexBuffer = BufferUtils.createFloatBuffer(vertexCount * SIZEOF_VERTEX_DATA / SIZEOF_FLOAT);
+		vertexBuffer = BufferUtils.createFloatBuffer(vertexCount * 3);
+		colorBuffer = BufferUtils.createFloatBuffer(vertexCount * 4);
+		uvBuffer = BufferUtils.createFloatBuffer(vertexCount * 2);
+		normalBuffer = BufferUtils.createFloatBuffer(vertexCount * 3);
 
-		//load the empty data
-		vbo.bufferData(null, vertexCount * SIZEOF_VERTEX_DATA, drawMode);
+		vertices.bufferData(null, vertexCount * 3 * 4, drawMode);
+		colors.bufferData(null, vertexCount * 4 * 4, drawMode);
+		uvs.bufferData(null, vertexCount * 2 * 4, drawMode);
+		normals.bufferData(null, vertexCount * 3 * 4, drawMode);
 
-		//enable all the bullcrap here
 		vao.enableVertexAttribArray(ShaderConstants.POSITION_INDEX);
 		vao.enableVertexAttribArray(ShaderConstants.COLOR_INDEX);
 		vao.enableVertexAttribArray(ShaderConstants.UV_INDEX);
 		vao.enableVertexAttribArray(ShaderConstants.NORMAL_INDEX);
 		
-		//setup the pointers right
-		vao.setPointer(ShaderConstants.POSITION_INDEX, vbo, 3, SIZEOF_VERTEX_DATA, 0);
-		vao.setPointer(ShaderConstants.COLOR_INDEX, vbo, 4, SIZEOF_VERTEX_DATA, SIZEOF_VERTEX);
-		vao.setPointer(ShaderConstants.UV_INDEX, vbo, 2, SIZEOF_VERTEX_DATA, SIZEOF_VERTEX + SIZEOF_COLOR);
-		vao.setPointer(ShaderConstants.NORMAL_INDEX, vbo, 3, SIZEOF_VERTEX_DATA, SIZEOF_VERTEX + SIZEOF_COLOR + SIZEOF_UV);
+		vao.setPointer(ShaderConstants.POSITION_INDEX, vertices, 3, 0, 0);
+		vao.setPointer(ShaderConstants.COLOR_INDEX, colors, 4, 0, 0);
+		vao.setPointer(ShaderConstants.UV_INDEX, uvs, 2, 0, 0);
+		vao.setPointer(ShaderConstants.NORMAL_INDEX, normals, 3, 0, 0);
 		
-		//create the default shaders and shit
 		defaultShader = ShaderLoader.createProgram(new File("res/default_vertex.glsl"), new File("res/default_fragment.glsl"));
 		defaultTexture = TextureLoader.loadTexture(1, 1, BufferUtils.createFloatBuffer(new float[]{1,1,1}), Texture.RGB);
 		defaultCamera = new OrthagonalCamera(1, 1);
 		
-		//set them
 		setTexture(defaultTexture);
 		setShader(defaultShader);
 		setCamera(defaultCamera);
@@ -111,18 +101,14 @@ public class SpriteBatch {
 	}
 	
 	public void normal(float x, float y, float z){
-		//{0,1,2,3, 4,5, 6,7,8};
-		//{1,1,1,1, 0,0, 0,0,1};
-		rest[6] = x;
-		rest[7] = y;
-		rest[8] = z;
+		normal[0] = x;
+		normal[1] = y;
+		normal[2] = z;
 	}
 	
 	public void uv(float x, float y){
-		//{0,1,2,3, 4,5, 6,7,8};
-		//{1,1,1,1, 0,0, 0,0,1};
-		rest[4] = x;
-		rest[5] = y;
+		uv[0] = x;
+		uv[1] = y;
 	}
 	
 	public void color(float r, float g, float b){
@@ -130,12 +116,10 @@ public class SpriteBatch {
 	}
 	
 	public void color(float r, float g, float b, float a){
-		//{0,1,2,3, 4,5, 6,7,8};
-		//{1,1,1,1, 0,0, 0,0,1};
-		rest[0] = r;
-		rest[1] = g;
-		rest[2] = b;
-		rest[3] = a;
+		color[0] = r;
+		color[1] = g;
+		color[2] = b;
+		color[3] = a;
 	}
 	
 	public void vertex(float x, float y){
@@ -146,8 +130,10 @@ public class SpriteBatch {
 		if(limit - idx <= 0)
 			flush();
 		
-		vertexBuffer.put(x).put(y).put(z).put(rest);
-		
+		vertexBuffer.put(x).put(y).put(z);
+		colorBuffer.put(color);
+		uvBuffer.put(uv);
+		normalBuffer.put(normal);
 		idx++;
 	}
 	
@@ -159,12 +145,20 @@ public class SpriteBatch {
 			return;
 		
 		vertexBuffer.position(0);
+		colorBuffer.position(0);
+		uvBuffer.position(0);
+		normalBuffer.position(0);
 		
 		//update vbo's
+//		vertices.bufferData(vertexBuffer, drawMode);
+//		colors.bufferData(colorBuffer, drawMode);
+//		uvs.bufferData(uvBuffer, drawMode);
+//		normals.bufferData(normalBuffer, drawMode);
 		
-		//upload the data to the vbo
-		//in float count
-		vbo.bufferSubData(vertexBuffer, idx * SIZEOF_VERTEX_DATA / SIZEOF_FLOAT);
+		vertices.bufferSubData(vertexBuffer, idx * 3);
+		colors.bufferSubData(colorBuffer, idx * 4);
+		uvs.bufferSubData(uvBuffer, idx * 2);
+		normals.bufferSubData(normalBuffer, idx * 3);
 		
 		length = idx;
 		idx = 0;
@@ -179,6 +173,7 @@ public class SpriteBatch {
 		drawing = false;
 	}
 
+	@Override
 	public void draw() {
 		if(surface != null)
 			surface.bind();

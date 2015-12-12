@@ -21,7 +21,7 @@ public class FTec {
 	public static void create(Game game){
 		 window = new Window(1024,768, false);
 		 
-		 window.setVSync(true);
+		 window.setVSync(false);
 		 window.setVisible(true);
 		 
 		 window.setCursorHidden(false);

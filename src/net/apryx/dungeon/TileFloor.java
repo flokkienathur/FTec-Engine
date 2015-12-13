@@ -12,7 +12,7 @@ public class TileFloor extends Tile{
 	@Override
 	public void draw(SpriteBatch batch, float x, float y, float z) {
 		batch.setTexture(this.texture);
-		
+
 		batch.color(1,1,1);
 		
 		batch.uv(texture.getTexCoordX(), texture.getTexCoordY());
@@ -29,7 +29,9 @@ public class TileFloor extends Tile{
 		batch.uv(texture.getTexCoordX(), texture.getTexCoordY2());
 		batch.vertex( x,z, y+TILE_SIZE);
 		
-		z += 2;
+		z += 1;
+		
+		batch.color(0.7f,0.7f,0.7f);
 		
 		batch.uv(texture.getTexCoordX(), texture.getTexCoordY());
 		batch.vertex( x,z, y);
@@ -44,6 +46,8 @@ public class TileFloor extends Tile{
 		batch.vertex( x+TILE_SIZE,z, y+TILE_SIZE);
 		batch.uv(texture.getTexCoordX(), texture.getTexCoordY2());
 		batch.vertex( x,z, y+TILE_SIZE);
+		
+		batch.color(1,1,1);
 		
 
 	}

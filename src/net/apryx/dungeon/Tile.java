@@ -38,6 +38,7 @@ public class Tile {
 	
 	static{
 		int s = 16;
+		
 		stone = new TileWall(new TextureRegion(HeavenDungeon.tile, 0, 0, s, s));
 		wood = new TileFloor(new TextureRegion(HeavenDungeon.tile, 0, s, s, s));
 		door = new TileDoor(new TextureRegion(HeavenDungeon.tile, s, 0, s, s));

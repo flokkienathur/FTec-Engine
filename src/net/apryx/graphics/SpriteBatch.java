@@ -366,6 +366,34 @@ public class SpriteBatch {
 		vertex(x3, y3);
 	}
 	
+	public void drawQuad(Texture texture, float x, float y, float z, float nx, float ny, float width, float height, float xOffset, float yOffset){
+		
+		float dxs = (-xOffset) * nx;
+		float dys = (-xOffset) * -ny;
+		float dxe = (-xOffset + width) * nx;
+		float dye = (-xOffset + width) * -ny; 
+		
+		float hs = y - yOffset;
+		float he = y - yOffset + height;
+		
+		setTexture(texture);
+		
+		uv(1, 1);
+		vertex( x + dys, hs, z+dxs);
+		uv(0, 1);
+		vertex( x + dye, hs, z+dxe);
+		uv(0, 0);
+		vertex( x + dye, he, z+dxe);
+		
+
+		uv(1, 1);
+		vertex( x + dys, hs, z+dxs);
+		uv(0, 0);
+		vertex( x + dye, he, z+dxe);
+		uv(1, 0);
+		vertex( x + dys, he, z+dxs);
+	}
+	
 	public int getDrawCalls(){
 		return drawCalls;
 	}

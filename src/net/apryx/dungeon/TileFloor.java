@@ -10,45 +10,15 @@ public class TileFloor extends Tile{
 	}
 
 	@Override
-	public void draw(SpriteBatch batch, float x, float y, float z) {
+	public void draw(Dungeon dungeon, SpriteBatch batch, int x, int y, int z) {
 		batch.setTexture(this.texture);
-
-		batch.color(1,1,1);
 		
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY());
-		batch.vertex( x,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY());
-		batch.vertex( x+TILE_SIZE,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY2());
-		batch.vertex( x+TILE_SIZE,z, y+TILE_SIZE);
-
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY());
-		batch.vertex( x,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY2());
-		batch.vertex( x+TILE_SIZE,z, y+TILE_SIZE);
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY2());
-		batch.vertex( x,z, y+TILE_SIZE);
+		float xx = x + 0.5f;
+		float yy = y + 0.5f;
+		float zz = z + 0.5f;
 		
-		z += 1;
+		batch.drawPlane(texture, xx, yy - 0.5f, zz,  1,  1, 1, 0.5f, 0.5f);		
+		batch.drawPlane(texture, xx, yy + 0.5f, zz,  -1,  1, 1, 0.5f, 0.5f);
 		
-		batch.color(0.7f,0.7f,0.7f);
-		
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY());
-		batch.vertex( x,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY());
-		batch.vertex( x+TILE_SIZE,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY2());
-		batch.vertex( x+TILE_SIZE,z, y+TILE_SIZE);
-
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY());
-		batch.vertex( x,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY2());
-		batch.vertex( x+TILE_SIZE,z, y+TILE_SIZE);
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY2());
-		batch.vertex( x,z, y+TILE_SIZE);
-		
-		batch.color(1,1,1);
-		
-
 	}
 }

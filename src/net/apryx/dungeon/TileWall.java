@@ -10,70 +10,28 @@ public class TileWall extends Tile{
 	}
 	
 	@Override
-	public void draw(SpriteBatch batch, float x, float y, float z) {
+	public void draw(Dungeon dungeon, SpriteBatch batch, int x, int y, int z) {
 		batch.setTexture(this.texture);
 		
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY());
-		batch.vertex( x,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY());
-		batch.vertex( x+TILE_SIZE,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY2());
-		batch.vertex( x+TILE_SIZE,z+TILE_SIZE, y);
+		float xx = x + 0.5f;
+		float yy = y + 0.5f;
+		float zz = z + 0.5f;
 
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY());
-		batch.vertex( x,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY2());
-		batch.vertex( x+TILE_SIZE,z+TILE_SIZE, y);
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY2());
-		batch.vertex( x,z+TILE_SIZE, y);
-		
-		y += 1;
-		
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY());
-		batch.vertex( x,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY());
-		batch.vertex( x+TILE_SIZE,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY2());
-		batch.vertex( x+TILE_SIZE,z+TILE_SIZE, y);
+		if(!dungeon.isSolid(x+1, z))
+			batch.drawQuad(texture, xx+0.5f, yy, zz, 1, 0,   1, 1, 0.5f, 0.5f);	
 
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY());
-		batch.vertex( x,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY2());
-		batch.vertex( x+TILE_SIZE,z+TILE_SIZE, y);
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY2());
-		batch.vertex( x,z+TILE_SIZE, y);
-		
-		y -= 1;
-		
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY());
-		batch.vertex( x,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY());
-		batch.vertex( x,z, y+TILE_SIZE);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY2());
-		batch.vertex( x,z+TILE_SIZE, y+TILE_SIZE);
+		if(!dungeon.isSolid(x-1, z))
+			batch.drawQuad(texture, xx-0.5f, yy, zz, -1, 0,   1, 1, 0.5f, 0.5f);
 
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY());
-		batch.vertex( x,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY2());
-		batch.vertex( x,z+TILE_SIZE, y+TILE_SIZE);
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY2());
-		batch.vertex( x,z+TILE_SIZE, y);
-		
-		x += 1;
-		
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY());
-		batch.vertex( x,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY());
-		batch.vertex( x,z, y+TILE_SIZE);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY2());
-		batch.vertex( x,z+TILE_SIZE, y+TILE_SIZE);
+		if(!dungeon.isSolid(x, z+1))
+			batch.drawQuad(texture, xx, yy, zz+0.5f, 0, 1,   1, 1, 0.5f, 0.5f);
 
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY());
-		batch.vertex( x,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY2());
-		batch.vertex( x,z+TILE_SIZE, y+TILE_SIZE);
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY2());
-		batch.vertex( x,z+TILE_SIZE, y);
+		if(!dungeon.isSolid(x, z-1))
+			batch.drawQuad(texture, xx, yy, zz-0.5f, 0, -1,   1, 1, 0.5f, 0.5f);
+	}
+	
+	public boolean isSolid(){
+		return true;
 	}
 	
 }

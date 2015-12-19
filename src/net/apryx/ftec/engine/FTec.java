@@ -19,7 +19,7 @@ public class FTec {
 	}
 
 	public static void create(Game game){
-		 window = new Window(1024,768, false);
+		 window = new Window(1280,720, false);
 		 
 		 window.setVSync(false);
 		 window.setVisible(true);
@@ -29,7 +29,7 @@ public class FTec {
 		 GL11.glEnable(GL11.GL_DEPTH_TEST);
 		 
 		 //Fuck face culling, makes inverting sprites 1000 times less easy, since this engine is mainly 2D, face culling for performance is not useful
-		 //GL11.glEnable(GL11.GL_CULL_FACE);
+		 GL11.glEnable(GL11.GL_CULL_FACE);
 		 
 		 GL11.glEnable(GL11.GL_BLEND); 
 		 GL11.glBlendFunc (GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -73,7 +73,7 @@ public class FTec {
 			 fps++;
 			 
 			 window.swap();
-			 //window.sleep(4);
+			 window.sleep(1000/60);
 		 }
 		 
 		 game.destroy();

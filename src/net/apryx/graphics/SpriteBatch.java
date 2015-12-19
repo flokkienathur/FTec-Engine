@@ -366,6 +366,69 @@ public class SpriteBatch {
 		vertex(x3, y3);
 	}
 	
+	/**
+	 * Draws a plane (same as quad, but laying on the ground)
+	 * @param texture
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param up
+	 * @param width
+	 * @param height
+	 * @param xOffset
+	 * @param yOffset
+	 */
+	public void drawPlane(Texture texture, float x, float y, float z, float up, float width, float height, float xOffset, float yOffset){
+		setTexture(texture);
+		
+		if(up > 0){
+			uv(texture.getTexCoordX(), texture.getTexCoordY());
+			vertex(x - xOffset, y, z - yOffset);
+			uv(texture.getTexCoordX2(), texture.getTexCoordY2());
+			vertex(x - xOffset + width, y, z - yOffset + height);
+			uv(texture.getTexCoordX2(), texture.getTexCoordY());
+			vertex(x - xOffset + width, y, z - yOffset);
+			
+			
+			uv(texture.getTexCoordX(), texture.getTexCoordY());
+			vertex(x - xOffset, y, z - yOffset);
+			uv(texture.getTexCoordX(), texture.getTexCoordY2());
+			vertex(x - xOffset, y, z - yOffset + height);
+			uv(texture.getTexCoordX2(), texture.getTexCoordY2());
+			vertex(x - xOffset + width, y, z - yOffset + height);
+		}else{
+			uv(texture.getTexCoordX(), texture.getTexCoordY());
+			vertex(x - xOffset, y, z - yOffset);
+			uv(texture.getTexCoordX2(), texture.getTexCoordY());
+			vertex(x - xOffset + width, y, z - yOffset);
+			uv(texture.getTexCoordX2(), texture.getTexCoordY2());
+			vertex(x - xOffset + width, y, z - yOffset + height);
+			
+			
+			uv(texture.getTexCoordX(), texture.getTexCoordY());
+			vertex(x - xOffset, y, z - yOffset);
+			uv(texture.getTexCoordX2(), texture.getTexCoordY2());
+			vertex(x - xOffset + width, y, z - yOffset + height);
+			uv(texture.getTexCoordX(), texture.getTexCoordY2());
+			vertex(x - xOffset, y, z - yOffset + height);
+		}
+		
+	}
+	
+	/**
+	 * Draws a quad standing up, nx and ny are the normals (for a 3d that would be vec3(nx,0,ny) )
+	 * 
+	 * @param texture
+	 * @param x position x
+	 * @param y position y
+	 * @param z position z
+	 * @param nx Normal x
+	 * @param ny Normal z
+	 * @param width Quads width
+	 * @param height Quads height
+	 * @param xOffset Offset
+	 * @param yOffset Offset
+	 */
 	public void drawQuad(Texture texture, float x, float y, float z, float nx, float ny, float width, float height, float xOffset, float yOffset){
 		
 		float dxs = (-xOffset) * nx;
@@ -378,20 +441,20 @@ public class SpriteBatch {
 		
 		setTexture(texture);
 		
-		uv(1, 1);
+		uv(texture.getTexCoordX2(), texture.getTexCoordY2());
 		vertex( x + dys, hs, z+dxs);
-		uv(0, 1);
-		vertex( x + dye, hs, z+dxe);
-		uv(0, 0);
+		uv(texture.getTexCoordX(), texture.getTexCoordY());
 		vertex( x + dye, he, z+dxe);
+		uv(texture.getTexCoordX(), texture.getTexCoordY2());
+		vertex( x + dye, hs, z+dxe);
 		
 
-		uv(1, 1);
+		uv(texture.getTexCoordX2(), texture.getTexCoordY2());
 		vertex( x + dys, hs, z+dxs);
-		uv(0, 0);
-		vertex( x + dye, he, z+dxe);
-		uv(1, 0);
+		uv(texture.getTexCoordX2(), texture.getTexCoordY());
 		vertex( x + dys, he, z+dxs);
+		uv(texture.getTexCoordX(), texture.getTexCoordY());
+		vertex( x + dye, he, z+dxe);
 	}
 	
 	public int getDrawCalls(){

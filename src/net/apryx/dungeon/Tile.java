@@ -18,22 +18,12 @@ public class Tile {
 		this.texture = texture;
 	}
 	
-	public void draw(SpriteBatch batch, float x, float y, float z){
-		batch.setTexture(this.texture);
-
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY());
-		batch.vertex( x,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY());
-		batch.vertex( x+TILE_SIZE,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY2());
-		batch.vertex( x+TILE_SIZE,z, y+TILE_SIZE);
-
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY());
-		batch.vertex( x,z, y);
-		batch.uv(texture.getTexCoordX2(), texture.getTexCoordY2());
-		batch.vertex( x+TILE_SIZE,z, y+TILE_SIZE);
-		batch.uv(texture.getTexCoordX(), texture.getTexCoordY2());
-		batch.vertex( x,z, y+TILE_SIZE);
+	public void draw(Dungeon dungeon, SpriteBatch batch, int x, int y, int z){
+		
+	}
+	
+	public boolean isSolid(){
+		return false;
 	}
 	
 	static{
